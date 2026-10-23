@@ -1,5 +1,17 @@
 {
   "common": {
-    "appTitle": "Чат MAX через GREEN-API"
+    "appTitle": "Чат MAX через GREEN-API",
+    "errors": {
+      "network": "Нет связи с сервером GREEN-API. Проверьте подключение к интернету и адрес API.",
+      "unauthorized": "Неверный idInstance или apiTokenInstance.",
+      "notFound": "Метод API не найден. Проверьте адрес API.",
+      "validation": "Сервер отклонил запрос: некорректные данные.",
+      "instanceUnavailable": "Инстанс недоступен: он запускается, не авторизован, истёк или удалён. Проверьте его в личном кабинете GREEN-API.",
+      "rateLimit": "Слишком много запросов. Повторите чуть позже.",
+      "quotaExceeded": "Превышен лимит тарифа GREEN-API.",
+      "server": "Ошибка на стороне GREEN-API. Повторите попытку позже.",
+      "invalidResponse": "Сервер вернул неожиданный ответ.",
+      "unknown": "Что-то пошло не так. Повторите попытку."
+    }
   }
 }

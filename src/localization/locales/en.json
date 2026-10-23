@@ -1,5 +1,17 @@
 {
   "common": {
-    "appTitle": "MAX chat via GREEN-API"
+    "appTitle": "MAX chat via GREEN-API",
+    "errors": {
+      "network": "Can't reach the GREEN-API server. Check your internet connection and the API URL.",
+      "unauthorized": "Invalid idInstance or apiTokenInstance.",
+      "notFound": "API method not found. Check the API URL.",
+      "validation": "The server rejected the request: invalid data.",
+      "instanceUnavailable": "The instance is unavailable: it is starting, not authorized, expired or deleted. Check it in the GREEN-API console.",
+      "rateLimit": "Too many requests. Try again a bit later.",
+      "quotaExceeded": "GREEN-API plan limit exceeded.",
+      "server": "GREEN-API server error. Try again later.",
+      "invalidResponse": "The server returned an unexpected response.",
+      "unknown": "Something went wrong. Try again."
+    }
   }
 }

@@ -1,8 +1,10 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
+import { STORAGE_KEYS } from '@/constants/storageKeys';
+import { readStorage, writeStorage } from '@/utils/storage';
+
 import { DEFAULT_LANGUAGE, isLanguage, SUPPORTED_LANGUAGES } from './languages';
-import { readStoredLanguage, writeStoredLanguage } from './languageStorage';
 import en from './locales/en.json';
 import ru from './locales/ru.json';
 
@@ -21,13 +23,13 @@ i18n.on('languageChanged', (language) => {
   syncDocumentWithLanguage(language);
 
   if (isLanguage(language)) {
-    writeStoredLanguage(language);
+    writeStorage(STORAGE_KEYS.language, language);
   }
 });
 
 void i18n.use(initReactI18next).init({
   resources,
-  lng: readStoredLanguage() ?? DEFAULT_LANGUAGE,
+  lng: readStorage(STORAGE_KEYS.language, isLanguage) ?? DEFAULT_LANGUAGE,
   fallbackLng: DEFAULT_LANGUAGE,
   supportedLngs: [...SUPPORTED_LANGUAGES],
   interpolation: {
