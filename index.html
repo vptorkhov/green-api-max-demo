@@ -15,7 +15,7 @@
         var mode = 'system';
 
         try {
-          var stored = JSON.parse(localStorage.getItem(THEME_STORAGE_KEY) || 'null');
+          var stored = JSON.parse(localStorage.getItem(THEME_STORAGE_KEY) ?? 'null');
 
           if (stored === 'light' || stored === 'dark' || stored === 'system') {
             mode = stored;

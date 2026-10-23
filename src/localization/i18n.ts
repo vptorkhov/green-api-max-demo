@@ -36,5 +36,3 @@ void i18n.use(initReactI18next).init({
   },
   initAsync: false,
 });
-
-export { i18n };

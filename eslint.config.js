@@ -1,5 +1,6 @@
 import js from '@eslint/js';
 import prettier from 'eslint-config-prettier';
+import i18next from 'eslint-plugin-i18next';
 import importX from 'eslint-plugin-import-x';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
@@ -74,6 +75,14 @@ export default defineConfig([
       ],
       'simple-import-sort/exports': 'error',
       'prefer-const': 'error',
+    },
+  },
+  {
+    // ProjectRules §10: текст в JSX (включая placeholder, aria-label, title) — только через t()
+    files: ['src/**/*.tsx'],
+    plugins: { i18next },
+    rules: {
+      'i18next/no-literal-string': ['error', { mode: 'jsx-only' }],
     },
   },
   {
