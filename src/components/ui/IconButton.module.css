@@ -1,0 +1,60 @@
+/* Круглая кнопка с иконкой — по правилам .button web.max.ru (refs/tokens.md, «Кнопки») */
+.button {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-round);
+  color: var(--button-color);
+  background: var(--button-bg);
+  transition: background-color var(--duration-fast);
+}
+
+@media (hover: hover) {
+  .button:hover:not(:disabled) {
+    --button-bg: var(--button-bg-hover);
+  }
+}
+
+.button:active:not(:disabled) {
+  --button-bg: var(--button-bg-pressed);
+}
+
+.button:disabled {
+  --button-bg: var(--button-bg-disabled);
+  --button-color: var(--button-color-disabled);
+}
+
+.primary {
+  --button-color: var(--color-icon-inverse);
+  --button-color-disabled: var(--color-text-inverse-disabled);
+  --button-bg: var(--color-accent);
+  --button-bg-hover: var(--color-accent-hover);
+  --button-bg-pressed: var(--color-accent-pressed);
+  --button-bg-disabled: var(--color-accent-disabled);
+}
+
+.ghost {
+  --button-color: var(--color-icon-primary);
+  --button-color-disabled: var(--color-icon-disabled);
+  --button-bg: transparent;
+  --button-bg-hover: var(--color-ghost-hover);
+  --button-bg-pressed: var(--color-ghost-pressed);
+  --button-bg-disabled: transparent;
+}
+
+.small {
+  --icon-size: var(--size-icon-small);
+
+  width: var(--size-button-small);
+  height: var(--size-button-small);
+}
+
+.medium {
+  --icon-size: var(--size-icon);
+
+  width: var(--size-button);
+  height: var(--size-button);
+}

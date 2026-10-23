@@ -1,0 +1,6 @@
+/* Размер задаёт родитель через --icon-size (например, кнопка 32px — иконка 20px) */
+.icon {
+  flex-shrink: 0;
+  width: var(--icon-size, var(--size-icon));
+  height: var(--icon-size, var(--size-icon));
+}

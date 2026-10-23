@@ -1,0 +1,22 @@
+/* Вращение 1 с, как у спиннера web.max.ru (refs/css/Spinner.*.css) */
+.spinner {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--spinner-size, var(--size-icon));
+  height: var(--spinner-size, var(--size-icon));
+  color: var(--spinner-color, var(--color-icon-secondary));
+}
+
+.svg {
+  width: 100%;
+  height: 100%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

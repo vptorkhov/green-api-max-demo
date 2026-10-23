@@ -1,0 +1,17 @@
+.errorMessage {
+  display: flex;
+  gap: var(--space-s);
+  align-items: flex-start;
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  color: var(--color-text-negative);
+}
+
+/* Иконка по высоте строки текста */
+.icon {
+  --icon-size: var(--line-height-caption);
+}
+
+.text {
+  overflow-wrap: anywhere;
+}

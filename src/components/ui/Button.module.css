@@ -1,0 +1,85 @@
+/*
+ * Состояния — как у кнопок web.max.ru (refs/tokens.md, «Кнопки»): вариант задаёт набор переменных,
+ * а hover / active / disabled переключают --button-bg и --button-color.
+ */
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--size-control);
+  padding: 0 var(--space-l);
+  border: none;
+  border-radius: var(--radius-m);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-body);
+  color: var(--button-color);
+  background: var(--button-bg);
+  transition: background-color var(--duration-fast);
+}
+
+@media (hover: hover) {
+  .button:hover:not(:disabled) {
+    --button-bg: var(--button-bg-hover);
+  }
+}
+
+.button:active:not(:disabled) {
+  --button-bg: var(--button-bg-pressed);
+}
+
+.button:disabled {
+  --button-bg: var(--button-bg-disabled);
+  --button-color: var(--button-color-disabled);
+}
+
+.primary {
+  --button-color: var(--color-text-inverse);
+  --button-color-disabled: var(--color-text-inverse-disabled);
+  --button-bg: var(--color-accent);
+  --button-bg-hover: var(--color-accent-hover);
+  --button-bg-pressed: var(--color-accent-pressed);
+  --button-bg-disabled: var(--color-accent-disabled);
+}
+
+.secondary {
+  --button-color: var(--color-text-themed);
+  --button-color-disabled: var(--color-icon-disabled);
+  --button-bg: var(--color-secondary);
+  --button-bg-hover: var(--color-secondary-hover);
+  --button-bg-pressed: var(--color-secondary-pressed);
+  --button-bg-disabled: var(--color-secondary);
+}
+
+.ghost {
+  --button-color: var(--color-text-themed);
+  --button-color-disabled: var(--color-icon-disabled);
+  --button-bg: transparent;
+  --button-bg-hover: var(--color-ghost-hover);
+  --button-bg-pressed: var(--color-ghost-pressed);
+  --button-bg-disabled: transparent;
+}
+
+/* При загрузке текст скрыт, но занимает место — ширина кнопки не прыгает */
+.loading .content {
+  visibility: hidden;
+}
+
+.spinner {
+  --spinner-size: var(--size-icon-small);
+  --spinner-color: currentColor;
+
+  position: absolute;
+}
+
+/* Загрузка блокирует кнопку, но выглядит как активная, а не как disabled */
+.loading.primary {
+  --button-bg-disabled: var(--color-accent);
+  --button-color-disabled: var(--color-text-inverse);
+}
+
+.loading.secondary,
+.loading.ghost {
+  --button-color-disabled: var(--color-text-themed);
+}

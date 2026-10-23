@@ -67,6 +67,8 @@
   --size-icon-small: 20px;
   --size-button-small: 32px;
   --size-button: 40px;
+  /* Высота текстовых кнопок и полей ввода (форма входа). В рефах MAX таких элементов нет — значение своё */
+  --size-control: 44px;
   --size-avatar-header: 40px;
   --size-avatar-list: 56px;
   --size-header-height: 64px;
@@ -95,6 +97,7 @@
   --color-text-secondary: #060708ad;
   --color-text-tertiary: #06070885;
   --color-text-inverse: #fff;
+  --color-text-inverse-disabled: #ffffffb8;
   --color-text-themed: #007aff;
   --color-text-negative: #ff303c;
 
@@ -116,6 +119,10 @@
   --color-accent-disabled: #007aff7a;
   --color-ghost-hover: #0d0d0d0a;
   --color-ghost-pressed: #0d0d0d14;
+  /* Вторичная кнопка: в рефах MAX нет — оттенок акцентного цвета, свои значения */
+  --color-secondary: #007aff14;
+  --color-secondary-hover: #007aff1f;
+  --color-secondary-pressed: #007aff29;
 
   /* Цвета: область переписки */
   --color-chat-bg-start: #99d5d7;
@@ -155,6 +162,7 @@
   --color-text-secondary: #fffc;
   --color-text-tertiary: #ffffffa3;
   --color-text-inverse: #fff;
+  --color-text-inverse-disabled: #ffffff3d;
   --color-text-themed: #007aff;
   --color-text-negative: #ce4257;
 
@@ -173,6 +181,9 @@
   --color-accent-disabled: #ffffff1f;
   --color-ghost-hover: #e7e7e70a;
   --color-ghost-pressed: #e7e7e714;
+  --color-secondary: #ffffff17;
+  --color-secondary-hover: #ffffff1f;
+  --color-secondary-pressed: #ffffff29;
 
   --color-chat-bg-start: #141414;
   --color-chat-bg-end: #141414;
