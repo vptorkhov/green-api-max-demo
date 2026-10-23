@@ -1,4 +1,4 @@
-import { createContext, type ReactNode, useCallback, useMemo, useState } from 'react';
+import { type ReactNode, useCallback, useMemo, useState } from 'react';
 
 import { STORAGE_KEYS } from '@/constants/storageKeys';
 import { useLocalStorageState } from '@/hooks/useLocalStorageState';
@@ -6,10 +6,7 @@ import type { GreenApiCredentials } from '@/types/greenApi.types';
 
 import type { AuthContextValue, LogoutReasonKey } from '../types/auth.types';
 import { isGreenApiCredentials } from '../utils/authGuards';
-
-// null — вне провайдера: useAuthContext в этом случае бросает ошибку
-// eslint-disable-next-line react-refresh/only-export-components -- контекст создаётся в файле провайдера (ProjectRules §2)
-export const AuthContext = createContext<AuthContextValue | null>(null);
+import { AuthContext } from './AuthContext';
 
 type Props = {
   children: ReactNode;
@@ -46,10 +43,14 @@ export function AuthProvider({ children }: Props) {
     [removeStoredCredentials],
   );
 
+  const clearLogoutReason = useCallback(() => {
+    setLogoutReason(null);
+  }, []);
+
   // Мемоизация: потребители контекста не перерисовываются, пока значение не изменилось (ProjectRules §13)
   const value = useMemo<AuthContextValue>(
-    () => ({ credentials, isAuthorized, logoutReason, setCredentials, logout }),
-    [credentials, isAuthorized, logoutReason, setCredentials, logout],
+    () => ({ credentials, isAuthorized, logoutReason, setCredentials, logout, clearLogoutReason }),
+    [credentials, isAuthorized, logoutReason, setCredentials, logout, clearLogoutReason],
   );
 
   return <AuthContext value={value}>{children}</AuthContext>;

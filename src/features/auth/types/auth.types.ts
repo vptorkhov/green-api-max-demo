@@ -31,6 +31,8 @@ export type AuthContextValue = {
   setCredentials: (credentials: GreenApiCredentials) => void;
   // Удаляет учётные данные из контекста и localStorage
   logout: (reason?: LogoutReasonKey) => void;
+  // Убирает причину прошлого выхода: новая попытка входа — уже другая ситуация
+  clearLogoutReason: () => void;
 };
 
 // Ответ getStateInstance: {"stateInstance":"authorized"}

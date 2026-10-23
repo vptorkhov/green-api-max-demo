@@ -43,6 +43,8 @@ export function LoginForm({ isLoading, fieldErrors, errorKey, onSubmit }: Props)
     ? t(fieldErrors.apiTokenInstance)
     : null;
   const apiUrlError = fieldErrors.apiUrl ? t(fieldErrors.apiUrl) : null;
+  const errorMessage = errorKey ? t(errorKey) : null;
+  const hasErrorMessage = errorMessage !== null;
   const tokenVisibilityLabel = isTokenVisible
     ? t('pages.auth.hideToken')
     : t('pages.auth.showToken');
@@ -114,7 +116,7 @@ export function LoginForm({ isLoading, fieldErrors, errorKey, onSubmit }: Props)
           spellCheck={false}
           onChange={handleApiUrlChange}
         />
-        {errorKey && <ErrorMessage message={t(errorKey)} />}
+        {hasErrorMessage && <ErrorMessage message={errorMessage} />}
         <Button type="submit" className={styles.submit} isLoading={isLoading}>
           {t('pages.auth.submit')}
         </Button>

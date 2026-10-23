@@ -11,14 +11,15 @@ import styles from './LoginScreen.module.css';
 
 // Экран входа: связывает useLogin с AuthContext (успешный вход → setCredentials)
 export function LoginScreen() {
-  const { setCredentials, logoutReason } = useAuthContext();
+  const { setCredentials, logoutReason, clearLogoutReason } = useAuthContext();
   const { isLoading, error, fieldErrors, login } = useLogin({ onSuccess: setCredentials });
   const { t } = useTranslation();
 
-  // Ошибка последней попытки входа важнее причины прошлого автоматического выхода
+  // Причина прошлого выхода видна до первой новой попытки входа, дальше — только её результат
   const errorKey = error ?? logoutReason;
 
   function handleSubmit(values: CredentialsFormValues) {
+    clearLogoutReason();
     void login(values);
   }
 
