@@ -48,6 +48,9 @@
         "blocked": "The MAX account linked to the instance is blocked.",
         "suspended": "The MAX account is temporarily restricted. See details in the GREEN-API console.",
         "pendingPassword": "Authorization is not complete: enter the two-factor password in the GREEN-API console."
+      },
+      "logoutReason": {
+        "unauthorized": "Session ended: the credentials are no longer valid. Check them in the GREEN-API console and sign in again."
       }
     },
     "chat": {

@@ -14,9 +14,14 @@ export type InstanceStateErrorKey =
 // Общая ошибка формы входа: сбой запроса (common.errors.*) или неподходящий статус инстанса
 export type LoginErrorKey = ErrorMessageKey | InstanceStateErrorKey;
 
-// Причина автоматического выхода для экрана входа: unauthorized в запросе (п. 4.7)
-// или смена статуса инстанса (stateInstanceChanged, этап 7)
-export type LogoutReasonKey = LoginErrorKey;
+// Причина автоматического выхода для экрана входа: учётные данные перестали действовать
+// (pages.auth.logoutReason.*, п. 4.7) или сменился статус инстанса (stateInstanceChanged, этап 7)
+export type LogoutReasonKey =
+  | `pages.auth.logoutReason.${keyof (typeof ru)['pages']['auth']['logoutReason']}`
+  | InstanceStateErrorKey;
+
+// Сообщение под формой входа: ошибка попытки входа или причина прошлого выхода
+export type LoginScreenErrorKey = LoginErrorKey | LogoutReasonKey;
 
 export type AuthContextValue = {
   credentials: GreenApiCredentials | null;

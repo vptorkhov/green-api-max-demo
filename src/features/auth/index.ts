@@ -3,3 +3,4 @@
 // попал бы в основной бандл вместе с AuthProvider и React.lazy ничего бы не разделял
 export { AuthProvider } from './components/AuthProvider';
 export { useAuthContext } from './hooks/useAuthContext';
+export { useUnauthorizedLogout } from './hooks/useUnauthorizedLogout';

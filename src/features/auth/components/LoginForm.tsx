@@ -13,7 +13,7 @@ import type {
   CredentialsField,
   CredentialsFieldErrors,
   CredentialsFormValues,
-  LoginErrorKey,
+  LoginScreenErrorKey,
 } from '../types/auth.types';
 
 import styles from './LoginForm.module.css';
@@ -27,7 +27,7 @@ const INITIAL_VALUES: CredentialsFormValues = {
 type Props = {
   isLoading: boolean;
   fieldErrors: CredentialsFieldErrors;
-  errorKey: LoginErrorKey | null;
+  errorKey: LoginScreenErrorKey | null;
   onSubmit: (values: CredentialsFormValues) => void;
 };
 
