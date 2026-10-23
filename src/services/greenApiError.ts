@@ -13,24 +13,25 @@ export type GreenApiErrorKind =
   | 'unknown';
 
 type GreenApiErrorOptions = {
+  method?: string;
   status?: number;
   cause?: unknown;
 };
 
 // Сообщение ошибки не содержит тела ответа и URL: в них может быть токен (GreenApiNotes.md §9).
+// Имя метода API (sendMessage, receiveNotification) секретов не содержит и помогает при отладке.
 export class GreenApiError extends Error {
   readonly kind: GreenApiErrorKind;
+  readonly method: string | null;
   readonly status: number | null;
 
-  constructor(kind: GreenApiErrorKind, { status, cause }: GreenApiErrorOptions = {}) {
-    super(
-      status === undefined
-        ? `GREEN-API request failed: ${kind}`
-        : `GREEN-API request failed: ${kind} (HTTP ${status})`,
-      { cause },
-    );
+  constructor(kind: GreenApiErrorKind, { method, status, cause }: GreenApiErrorOptions = {}) {
+    const statusSuffix = status === undefined ? '' : ` (HTTP ${status})`;
+
+    super(`GREEN-API ${method ?? 'request'} failed: ${kind}${statusSuffix}`, { cause });
     this.name = 'GreenApiError';
     this.kind = kind;
+    this.method = method ?? null;
     this.status = status ?? null;
   }
 }
