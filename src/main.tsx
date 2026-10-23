@@ -1,3 +1,5 @@
+import '@/localization/i18n';
+
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
