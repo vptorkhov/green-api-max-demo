@@ -16,6 +16,18 @@ type RequestOptions<T> = {
   timeoutMs?: number;
 };
 
+// Относительный apiUrl браузер дописал бы к адресу нашего сайта — запрос с токеном в пути
+// ушёл бы на собственный хостинг. Поэтому допускается только абсолютный http(s)-адрес
+function isAbsoluteHttpUrl(value: string) {
+  try {
+    const { protocol } = new URL(value);
+
+    return protocol === 'https:' || protocol === 'http:';
+  } catch {
+    return false;
+  }
+}
+
 // {apiUrl}/waInstance{idInstance}/{method}/{apiTokenInstance}[/{pathParam}][?query] — GreenApiNotes.md §1.
 // URL никуда не логируется и не попадает в ошибки: в нём токен.
 function buildUrl(
@@ -80,6 +92,11 @@ async function request<T>(
   body: unknown,
   { guard, pathParam, query, signal, timeoutMs = REQUEST_TIMEOUT_MS }: RequestOptions<T>,
 ): Promise<T> {
+  // Неверный адрес для пользователя — та же ситуация, что и недоступный сервер
+  if (!isAbsoluteHttpUrl(credentials.apiUrl)) {
+    throw new GreenApiError('network', { method });
+  }
+
   const url = buildUrl(credentials, method, pathParam, query);
   const timeoutSignal = AbortSignal.timeout(timeoutMs);
   const hasBody = body !== undefined;

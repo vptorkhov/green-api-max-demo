@@ -8,7 +8,7 @@
       "retry": "Повторить"
     },
     "errors": {
-      "network": "Нет связи с сервером GREEN-API. Проверьте подключение к интернету и адрес API.",
+      "network": "Не удалось связаться с GREEN-API. Проверьте подключение к интернету, apiUrl и idInstance.",
       "unauthorized": "Неверный idInstance или apiTokenInstance.",
       "notFound": "Метод API не найден. Проверьте адрес API.",
       "validation": "Сервер отклонил запрос: некорректные данные.",
