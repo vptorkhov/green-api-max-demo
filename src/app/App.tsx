@@ -1,7 +1,12 @@
-import { useTranslation } from 'react-i18next';
+import { AuthProvider } from '@/features/auth';
 
+import { AppScreens } from './AppScreens';
+
+// Корень приложения: провайдеры и переключение экранов
 export function App() {
-  const { t } = useTranslation();
-
-  return <div>{t('common.appTitle')}</div>;
+  return (
+    <AuthProvider>
+      <AppScreens />
+    </AuthProvider>
+  );
 }

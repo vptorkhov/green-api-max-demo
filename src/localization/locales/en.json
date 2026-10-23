@@ -49,6 +49,9 @@
         "suspended": "The MAX account is temporarily restricted. See details in the GREEN-API console.",
         "pendingPassword": "Authorization is not complete: enter the two-factor password in the GREEN-API console."
       }
+    },
+    "chat": {
+      "title": "Chats"
     }
   }
 }

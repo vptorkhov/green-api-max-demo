@@ -1,0 +1,7 @@
+/* Пока загружается чанк экрана — спиннер по центру страницы */
+.fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+}
