@@ -20,7 +20,7 @@ const SHARED_LAYERS = [
   'styles',
 ];
 
-// ProjectRules §2: app → features → shared layers; other domains only via their index.ts
+// ProjectRules §2: app → features → общие слои; чужой домен — только через его index.ts
 const restrictedImports = (patterns) => ({
   'no-restricted-imports': ['error', { patterns }],
 });
@@ -59,7 +59,7 @@ export default defineConfig([
         },
       ],
       'import-x/no-default-export': 'error',
-      // ProjectRules §4: external → @/ → relative → styles
+      // ProjectRules §4: внешние → @/ → относительные → стили
       'simple-import-sort/imports': [
         'error',
         {
@@ -101,7 +101,7 @@ export default defineConfig([
     ]),
   },
   {
-    // ProjectRules §4: default export only where the tool requires it
+    // ProjectRules §4: default export — только там, где его требует инструмент
     files: ['*.config.{js,ts}'],
     languageOptions: {
       globals: globals.node,

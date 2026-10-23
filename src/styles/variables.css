@@ -1,0 +1,199 @@
+/*
+ * Токены дизайна. Значения взяты с web.max.ru, цветовая тема «space»
+ * (green-api-max-docs/refs/tokens.md). Имена — собственные.
+ *
+ * Светлая тема — тема по умолчанию и задана в :root, поэтому страница оформлена,
+ * даже если data-theme не выставлен. Тёмная тема переопределяет только цвета.
+ */
+
+:root {
+  /* Типографика */
+  --font-family:
+    -apple-system, BlinkMacSystemFont, 'Roboto', system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+
+  --letter-spacing-default: 0.15px;
+  --letter-spacing-small: 0.2px;
+  --letter-spacing-tiny: 0.3px;
+
+  --font-size-header: 24px;
+  --line-height-header: 28px;
+  --font-size-body: 16px;
+  --line-height-body: 20px;
+  --font-size-detail: 15px;
+  --line-height-detail: 20px;
+  --font-size-caption: 14px;
+  --line-height-caption: 18px;
+  --font-size-description: 13px;
+  --line-height-description: 16px;
+  --font-size-label: 12px;
+  --line-height-label: 16px;
+  --font-size-tiny: 11px;
+  --line-height-tiny: 14px;
+
+  /* Отступы */
+  --space-3xs: 1px;
+  --space-2xs: 2px;
+  --space-xs: 4px;
+  --space-s-half: 6px;
+  --space-s: 8px;
+  --space-m-half: 10px;
+  --space-m: 12px;
+  --space-l: 16px;
+  --space-xl-half: 20px;
+  --space-xl: 24px;
+  --space-2xl: 32px;
+
+  /* Радиусы */
+  --radius-xs: 4px;
+  --radius-s-half: 6px;
+  --radius-s: 8px;
+  --radius-m-half: 10px;
+  --radius-m: 12px;
+  --radius-l: 16px;
+  --radius-xl: 20px;
+  --radius-round: 50%;
+  --radius-pill: 999px;
+  --radius-bubble: var(--radius-l);
+  --radius-bubble-stack: var(--radius-s-half);
+
+  /* Размеры */
+  --size-border: 1px;
+  --size-focus-ring: 2px;
+  --size-icon: 24px;
+  --size-icon-small: 20px;
+  --size-button-small: 32px;
+  --size-button: 40px;
+  --size-avatar-header: 40px;
+  --size-avatar-list: 56px;
+  --size-header-height: 64px;
+  --size-sidebar-width: 393px;
+  --size-content-max-width: 732px;
+  --composer-max-lines: 10;
+
+  /* Брейкпоинт (только для справки: CSS-переменные нельзя использовать в @media).
+     Узкая раскладка: max-width 925.9px — держать в синхроне с медиазапросами. */
+  --breakpoint-narrow: 926px;
+
+  /* Анимация */
+  --duration-fast: 0.15s;
+  --duration-normal: 0.2s;
+
+  /* Цвета: поверхности */
+  --color-bg-primary: #fff;
+  --color-bg-secondary: #f5f7fa;
+  --color-bg-input: #09090914;
+  --color-bg-hover: #f6f6f6;
+  --color-bg-pressed: #fafafa;
+  --color-bg-selected: #007aff14;
+  --color-bg-overlay: #0c0d0e52;
+
+  /* Цвета: текст */
+  --color-text-primary: #060708;
+  --color-text-secondary: #060708ad;
+  --color-text-tertiary: #06070885;
+  --color-text-inverse: #fff;
+  --color-text-themed: #007aff;
+  --color-text-negative: #ff303c;
+
+  /* Цвета: иконки */
+  --color-icon-primary: #060708d6;
+  --color-icon-secondary: #060708a3;
+  --color-icon-themed: #007aff;
+  --color-icon-inverse: #fff;
+  --color-icon-disabled: #6f7276a3;
+
+  /* Цвета: линии и фокус */
+  --color-divider: #0c0d0e0f;
+  --color-focus: #6d92ca;
+
+  /* Цвета: кнопки */
+  --color-accent: #007aff;
+  --color-accent-hover: #479fff;
+  --color-accent-pressed: #006ee5;
+  --color-accent-disabled: #007aff7a;
+  --color-ghost-hover: #0d0d0d0a;
+  --color-ghost-pressed: #0d0d0d14;
+
+  /* Цвета: область переписки */
+  --color-chat-bg-start: #99d5d7;
+  --color-chat-bg-end: #80bcff;
+  --color-capsule-bg: #0f8ec285;
+  --color-composer-shadow: #20366e24;
+
+  /* Цвета: пузыри сообщений (шаги градиента 1 → 3) */
+  --color-bubble-in-1: #fff;
+  --color-bubble-in-2: #fff;
+  --color-bubble-in-3: #fff;
+  --color-bubble-in-text: #060708;
+  --color-bubble-in-time: #06070885;
+
+  --color-bubble-out-1: #e9fdff;
+  --color-bubble-out-2: #e9fdff;
+  --color-bubble-out-3: #e9fdff;
+  --color-bubble-out-text: #011c29;
+  --color-bubble-out-time: #0784b8;
+  --color-bubble-out-status: #0f8ec2;
+
+  --color-bubble-alert: #e64646;
+
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --color-bg-primary: #17181c;
+  --color-bg-secondary: #25262d;
+  --color-bg-input: #ffffff17;
+  --color-bg-hover: #32343d;
+  --color-bg-pressed: #1f2026;
+  --color-bg-selected: #2c2d37;
+  --color-bg-overlay: #0d0d0da3;
+
+  --color-text-primary: #fff;
+  --color-text-secondary: #fffc;
+  --color-text-tertiary: #ffffffa3;
+  --color-text-inverse: #fff;
+  --color-text-themed: #007aff;
+  --color-text-negative: #ce4257;
+
+  --color-icon-primary: #fff;
+  --color-icon-secondary: #ffffffad;
+  --color-icon-themed: #007aff;
+  --color-icon-inverse: #fff;
+  --color-icon-disabled: #ffffff3d;
+
+  --color-divider: #ffffff0f;
+  --color-focus: #709ada;
+
+  --color-accent: #007aff;
+  --color-accent-hover: #479fff;
+  --color-accent-pressed: #006ee5;
+  --color-accent-disabled: #ffffff1f;
+  --color-ghost-hover: #e7e7e70a;
+  --color-ghost-pressed: #e7e7e714;
+
+  --color-chat-bg-start: #141414;
+  --color-chat-bg-end: #141414;
+  --color-capsule-bg: #282c42b2;
+  --color-composer-shadow: #00000070;
+
+  --color-bubble-in-1: #3b3f5e;
+  --color-bubble-in-2: #373a4e;
+  --color-bubble-in-3: #32343d;
+  --color-bubble-in-text: #fff;
+  --color-bubble-in-time: #ffffffa3;
+
+  --color-bubble-out-1: #8849b4;
+  --color-bubble-out-2: #735acd;
+  --color-bubble-out-3: #5d6ae5;
+  --color-bubble-out-text: #fff;
+  --color-bubble-out-time: #ffffffa3;
+  --color-bubble-out-status: #ffffffe0;
+
+  --color-bubble-alert: #e64646;
+
+  color-scheme: dark;
+}

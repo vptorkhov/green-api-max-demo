@@ -5,6 +5,31 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>green-api-max-demo</title>
+    <script>
+      // Применяет тему до первой отрисовки, чтобы не мелькала светлая тема.
+      // Выполняется до загрузки бандла и не может импортировать из src. Держать в синхроне с
+      // src/constants/storageKeys.ts (ключ темы) и src/utils/storage.ts (формат JSON).
+      (function () {
+        var THEME_STORAGE_KEY = 'green-api-max-demo:theme';
+        var mode = 'system';
+
+        try {
+          var stored = JSON.parse(localStorage.getItem(THEME_STORAGE_KEY) || 'null');
+
+          if (stored === 'light' || stored === 'dark' || stored === 'system') {
+            mode = stored;
+          }
+        } catch (_error) {
+          mode = 'system';
+        }
+
+        var isDark =
+          mode === 'dark' ||
+          (mode === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+        document.documentElement.dataset.theme = isDark ? 'dark' : 'light';
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
