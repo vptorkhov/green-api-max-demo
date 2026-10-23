@@ -1,5 +1,6 @@
 import { REQUEST_TIMEOUT_MS } from '@/constants/greenApi';
-import type { GreenApiCredentials, TypeGuard } from '@/types/greenApi.types';
+import type { TypeGuard } from '@/types/common.types';
+import type { GreenApiCredentials } from '@/types/greenApi.types';
 
 import { getErrorKindByStatus, GreenApiError, isAbortError } from './greenApiError';
 
@@ -36,11 +37,8 @@ function buildUrl(
   pathParam?: string | number,
   query?: Record<string, string | number>,
 ) {
-  const segments = [`waInstance${idInstance}`, method, apiTokenInstance];
-
-  if (pathParam !== undefined) {
-    segments.push(String(pathParam));
-  }
+  const baseSegments = [`waInstance${idInstance}`, method, apiTokenInstance];
+  const segments = pathParam === undefined ? baseSegments : [...baseSegments, String(pathParam)];
 
   const path = segments.map(encodeURIComponent).join('/');
   const queryString = query

@@ -1,5 +1,7 @@
-/* Вращение 1 с, как у спиннера web.max.ru (refs/css/Spinner.*.css) */
 .spinner {
+  /* Один оборот за 1 с, как у спиннера web.max.ru (refs/css/Spinner.*.css) */
+  --spinner-rotation-duration: 1s;
+
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;
@@ -12,7 +14,7 @@
 .svg {
   width: 100%;
   height: 100%;
-  animation: spin 1s linear infinite;
+  animation: spin var(--spinner-rotation-duration) linear infinite;
 }
 
 @keyframes spin {

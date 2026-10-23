@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 
 import type { StorageKey } from '@/constants/storageKeys';
-import type { TypeGuard } from '@/types/greenApi.types';
+import type { TypeGuard } from '@/types/common.types';
 import { readStorage, removeStorage, writeStorage } from '@/utils/storage';
 
 // Состояние, синхронизированное с localStorage. Начальное значение читается один раз при монтировании;

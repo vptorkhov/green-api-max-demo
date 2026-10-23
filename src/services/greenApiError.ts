@@ -69,6 +69,7 @@ export function getErrorKindByStatus(status: number, bodyText = ''): GreenApiErr
     return 'rateLimit';
   }
 
+  // 466 — нестандартный код GREEN-API: исчерпан лимит тарифа (api-docs/general/466-error-example-body.md)
   if (status === 466) {
     return 'quotaExceeded';
   }

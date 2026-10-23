@@ -1,5 +1,5 @@
 import type { StorageKey } from '@/constants/storageKeys';
-import type { TypeGuard } from '@/types/greenApi.types';
+import type { TypeGuard } from '@/types/common.types';
 
 // Значения хранятся как JSON. Формат продублирован в inline-скрипте темы в index.html — менять вместе.
 // localStorage может быть недоступен (приватный режим, запрет cookies) или переполнен,
