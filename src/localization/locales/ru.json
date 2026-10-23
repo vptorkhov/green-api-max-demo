@@ -22,6 +22,19 @@
   },
   "pages": {
     "auth": {
+      "title": "Вход",
+      "subtitle": "Введите данные инстанса GREEN-API, к которому подключён аккаунт MAX.",
+      "fields": {
+        "idInstance": "idInstance",
+        "apiTokenInstance": "apiTokenInstance",
+        "apiUrl": "apiUrl"
+      },
+      "apiUrlHint": "Адрес API из личного кабинета, если он отличается.",
+      "showToken": "Показать токен",
+      "hideToken": "Скрыть токен",
+      "submit": "Войти",
+      "consoleHint": "Все данные есть в",
+      "consoleLink": "личном кабинете GREEN-API",
       "validation": {
         "idInstanceRequired": "Введите idInstance.",
         "idInstanceNotNumeric": "idInstance состоит только из цифр.",

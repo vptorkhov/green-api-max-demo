@@ -6,3 +6,6 @@ export const DEFAULT_API_URL = 'https://api.green-api.com';
 // только через ~60 с и подвешивает форму входа (GreenApiNotes.md §9).
 // Для receiveNotification таймаут считается отдельно: receiveTimeout + запас (этап 7).
 export const REQUEST_TIMEOUT_MS = 15_000;
+
+// Личный кабинет GREEN-API: там idInstance, apiTokenInstance и apiUrl инстанса
+export const GREEN_API_CONSOLE_URL = 'https://console.green-api.com';

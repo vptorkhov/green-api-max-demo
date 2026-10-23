@@ -82,7 +82,27 @@ export default defineConfig([
     files: ['src/**/*.tsx'],
     plugins: { i18next },
     rules: {
-      'i18next/no-literal-string': ['error', { mode: 'jsx-only' }],
+      'i18next/no-literal-string': [
+        'error',
+        {
+          mode: 'jsx-only',
+          // Проверяются только атрибуты с пользовательским текстом: стандартные и текстовые props
+          // компонентов из components/ui. Технические (name, autoComplete, inputMode) не проверяются
+          'jsx-attributes': {
+            include: [
+              'placeholder',
+              'alt',
+              'aria-label',
+              'title',
+              'value',
+              'label',
+              'hint',
+              'error',
+              'message',
+            ],
+          },
+        },
+      ],
     },
   },
   {

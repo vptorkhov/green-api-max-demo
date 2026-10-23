@@ -22,6 +22,19 @@
   },
   "pages": {
     "auth": {
+      "title": "Sign in",
+      "subtitle": "Enter the details of the GREEN-API instance linked to your MAX account.",
+      "fields": {
+        "idInstance": "idInstance",
+        "apiTokenInstance": "apiTokenInstance",
+        "apiUrl": "apiUrl"
+      },
+      "apiUrlHint": "The API URL from the console, if it differs.",
+      "showToken": "Show token",
+      "hideToken": "Hide token",
+      "submit": "Sign in",
+      "consoleHint": "Find all details in the",
+      "consoleLink": "GREEN-API console",
       "validation": {
         "idInstanceRequired": "Enter idInstance.",
         "idInstanceNotNumeric": "idInstance must contain digits only.",
