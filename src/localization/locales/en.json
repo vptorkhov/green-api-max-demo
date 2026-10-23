@@ -28,6 +28,13 @@
         "apiTokenInstanceRequired": "Enter apiTokenInstance.",
         "apiUrlRequired": "Enter apiUrl.",
         "apiUrlInvalid": "Enter a URL like https://api.green-api.com."
+      },
+      "instanceState": {
+        "notAuthorized": "The instance is not authorized in MAX. Scan the QR code in the GREEN-API console.",
+        "starting": "The instance is starting — this can take up to 5 minutes. Try again later.",
+        "blocked": "The MAX account linked to the instance is blocked.",
+        "suspended": "The MAX account is temporarily restricted. See details in the GREEN-API console.",
+        "pendingPassword": "Authorization is not complete: enter the two-factor password in the GREEN-API console."
       }
     }
   }

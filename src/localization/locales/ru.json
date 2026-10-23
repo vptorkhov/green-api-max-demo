@@ -28,6 +28,13 @@
         "apiTokenInstanceRequired": "Введите apiTokenInstance.",
         "apiUrlRequired": "Введите apiUrl.",
         "apiUrlInvalid": "Укажите адрес вида https://api.green-api.com."
+      },
+      "instanceState": {
+        "notAuthorized": "Инстанс не авторизован в MAX. Отсканируйте QR-код в личном кабинете GREEN-API.",
+        "starting": "Инстанс запускается — это может занять до 5 минут. Повторите вход позже.",
+        "blocked": "Аккаунт MAX, привязанный к инстансу, заблокирован.",
+        "suspended": "Аккаунт MAX временно ограничен. Подробности — в личном кабинете GREEN-API.",
+        "pendingPassword": "Авторизация не завершена: введите пароль двухфакторной защиты в личном кабинете GREEN-API."
       }
     }
   }
