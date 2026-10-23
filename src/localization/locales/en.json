@@ -1,6 +1,12 @@
 {
   "common": {
     "appTitle": "MAX chat via GREEN-API",
+    "loading": "Loading…",
+    "actions": {
+      "back": "Back",
+      "logout": "Log out",
+      "retry": "Retry"
+    },
     "errors": {
       "network": "Can't reach the GREEN-API server. Check your internet connection and the API URL.",
       "unauthorized": "Invalid idInstance or apiTokenInstance.",

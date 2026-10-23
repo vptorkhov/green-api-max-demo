@@ -1,6 +1,12 @@
 {
   "common": {
     "appTitle": "Чат MAX через GREEN-API",
+    "loading": "Загрузка…",
+    "actions": {
+      "back": "Назад",
+      "logout": "Выйти",
+      "retry": "Повторить"
+    },
     "errors": {
       "network": "Нет связи с сервером GREEN-API. Проверьте подключение к интернету и адрес API.",
       "unauthorized": "Неверный idInstance или apiTokenInstance.",
