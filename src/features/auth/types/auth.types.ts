@@ -14,6 +14,20 @@ export type InstanceStateErrorKey =
 // Общая ошибка формы входа: сбой запроса (common.errors.*) или неподходящий статус инстанса
 export type LoginErrorKey = ErrorMessageKey | InstanceStateErrorKey;
 
+// Причина автоматического выхода для экрана входа: unauthorized в запросе (п. 4.7)
+// или смена статуса инстанса (stateInstanceChanged, этап 7)
+export type LogoutReasonKey = LoginErrorKey;
+
+export type AuthContextValue = {
+  credentials: GreenApiCredentials | null;
+  isAuthorized: boolean;
+  logoutReason: LogoutReasonKey | null;
+  // Сохраняет учётные данные после успешного входа и сбрасывает причину прошлого выхода
+  setCredentials: (credentials: GreenApiCredentials) => void;
+  // Удаляет учётные данные из контекста и localStorage
+  logout: (reason?: LogoutReasonKey) => void;
+};
+
 // Ответ getStateInstance: {"stateInstance":"authorized"}
 export type GetStateInstanceResponse = {
   stateInstance: InstanceState;

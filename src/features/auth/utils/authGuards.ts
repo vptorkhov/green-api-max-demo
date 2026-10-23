@@ -1,3 +1,4 @@
+import type { GreenApiCredentials } from '@/types/greenApi.types';
 import { isRecord, isString } from '@/utils/typeGuards';
 
 import type { GetStateInstanceResponse, InstanceState } from '../types/auth.types';
@@ -19,4 +20,15 @@ export function isInstanceState(value: unknown): value is InstanceState {
 
 export function isGetStateInstanceResponse(value: unknown): value is GetStateInstanceResponse {
   return isRecord(value) && isInstanceState(value.stateInstance);
+}
+
+// Учётные данные из localStorage: проверяется только форма. Значения были проверены при входе,
+// а подменённый вручную apiUrl не пропустит HTTP-клиент (только абсолютный http(s)-адрес)
+export function isGreenApiCredentials(value: unknown): value is GreenApiCredentials {
+  return (
+    isRecord(value) &&
+    isString(value.apiUrl) &&
+    isString(value.idInstance) &&
+    isString(value.apiTokenInstance)
+  );
 }
