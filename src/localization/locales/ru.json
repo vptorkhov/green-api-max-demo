@@ -19,5 +19,16 @@
       "invalidResponse": "Сервер вернул неожиданный ответ.",
       "unknown": "Что-то пошло не так. Повторите попытку."
     }
+  },
+  "pages": {
+    "auth": {
+      "validation": {
+        "idInstanceRequired": "Введите idInstance.",
+        "idInstanceNotNumeric": "idInstance состоит только из цифр.",
+        "apiTokenInstanceRequired": "Введите apiTokenInstance.",
+        "apiUrlRequired": "Введите apiUrl.",
+        "apiUrlInvalid": "Укажите адрес вида https://api.green-api.com."
+      }
+    }
   }
 }

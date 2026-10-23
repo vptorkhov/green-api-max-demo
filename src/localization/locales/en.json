@@ -19,5 +19,16 @@
       "invalidResponse": "The server returned an unexpected response.",
       "unknown": "Something went wrong. Try again."
     }
+  },
+  "pages": {
+    "auth": {
+      "validation": {
+        "idInstanceRequired": "Enter idInstance.",
+        "idInstanceNotNumeric": "idInstance must contain digits only.",
+        "apiTokenInstanceRequired": "Enter apiTokenInstance.",
+        "apiUrlRequired": "Enter apiUrl.",
+        "apiUrlInvalid": "Enter a URL like https://api.green-api.com."
+      }
+    }
   }
 }
