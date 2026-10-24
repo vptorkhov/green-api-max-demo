@@ -57,3 +57,26 @@ export type ChatsState = {
 // Ключ ошибки номера телефона в форме создания чата (выводится из ru.json)
 export type PhoneValidationErrorKey =
   `pages.chat.phoneValidation.${keyof (typeof ru)['pages']['chat']['phoneValidation']}`;
+
+// Сохраняемая часть состояния: активный чат между сессиями не запоминается
+export type StoredChats = Pick<ChatsState, 'chats' | 'messages'>;
+
+// Данные нового чата: из checkAccount (п. 5.5) или из уведомления (этап 7)
+export type NewChat = Pick<Chat, 'chatId' | 'phone' | 'name'>;
+
+// Действия reducer. Время передаётся в действии: reducer — чистая функция, без Date.now()
+export type ChatsAction =
+  | { type: 'chatCreated'; chat: NewChat; createdAt: number }
+  | { type: 'chatSelected'; chatId: string | null }
+  | { type: 'messageAdded'; message: Message }
+  | { type: 'messageStatusChanged'; chatId: string; messageId: string; status: MessageStatus }
+  | { type: 'chatRead'; chatId: string };
+
+export type ChatContextValue = Pick<ChatsState, 'chats' | 'messages' | 'activeChatId'> & {
+  // Создаёт чат или открывает существующий с тем же chatId
+  createChat: (chat: NewChat) => void;
+  selectChat: (chatId: string | null) => void;
+  addMessage: (message: Message) => void;
+  changeMessageStatus: (chatId: string, messageId: string, status: MessageStatus) => void;
+  markChatRead: (chatId: string) => void;
+};

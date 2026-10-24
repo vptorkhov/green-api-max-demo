@@ -9,4 +9,10 @@ export const STORAGE_KEYS = {
   credentials: `${STORAGE_PREFIX}:credentials`,
 } as const;
 
-export type StorageKey = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS];
+// Чаты и сообщения — отдельно для каждого инстанса: у разных инстансов разные собеседники (п. 5.3)
+export function getChatsStorageKey(idInstance: string) {
+  return `${STORAGE_PREFIX}:chats:${idInstance}` as const;
+}
+
+export type StorageKey =
+  (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS] | ReturnType<typeof getChatsStorageKey>;
