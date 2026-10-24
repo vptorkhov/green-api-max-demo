@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import { AuthContext } from '../components/AuthContext';
+import { AuthContext } from '../components/AuthProvider/AuthContext';
 
 // Доступ к учётным данным и выходу. Вне AuthProvider — ошибка, а не тихий null
 export function useAuthContext() {

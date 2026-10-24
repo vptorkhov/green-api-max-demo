@@ -1,6 +1,6 @@
 import { joinClassNames } from '@/utils/joinClassNames';
 
-import { AlertIcon } from './icons/AlertIcon';
+import { AlertIcon } from '../icons/AlertIcon';
 
 import styles from './ErrorMessage.module.css';
 

@@ -1,0 +1,64 @@
+/* По .bubble web.max.ru (refs/tokens.md, «Пузырь сообщения»): градиент 239°, радиус 16 */
+.row {
+  /* Пузырь не шире 3/4 колонки переписки, как у текстовых сообщений MAX */
+  --bubble-max-width: 75%;
+
+  display: flex;
+  margin: var(--space-3xs) 0;
+}
+
+.rowOutgoing {
+  justify-content: flex-end;
+}
+
+.bubble {
+  /* Угол градиента пузыря из CSS web.max.ru */
+  --bubble-gradient-angle: 239deg;
+
+  max-width: var(--bubble-max-width);
+  padding: var(--space-s-half) var(--space-m-half);
+  border-radius: var(--radius-bubble);
+  color: var(--bubble-text);
+  background: linear-gradient(
+    var(--bubble-gradient-angle),
+    var(--bubble-step-1) 0%,
+    var(--bubble-step-2) 50%,
+    var(--bubble-step-3) 100%
+  );
+}
+
+.incoming {
+  --bubble-text: var(--color-bubble-in-text);
+  --bubble-time: var(--color-bubble-in-time);
+  --bubble-step-1: var(--color-bubble-in-1);
+  --bubble-step-2: var(--color-bubble-in-2);
+  --bubble-step-3: var(--color-bubble-in-3);
+}
+
+.outgoing {
+  --bubble-text: var(--color-bubble-out-text);
+  --bubble-time: var(--color-bubble-out-time);
+  --bubble-step-1: var(--color-bubble-out-1);
+  --bubble-step-2: var(--color-bubble-out-2);
+  --bubble-step-3: var(--color-bubble-out-3);
+}
+
+/* Переносы строк сохраняются, длинное слово без пробелов переносится, а не растягивает пузырь */
+.text {
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* Время обтекается текстом: на последней строке, если есть место, иначе — строкой ниже справа */
+.time {
+  float: right;
+  margin: var(--space-xs) 0 calc(-1 * var(--space-2xs)) var(--space-s);
+  font-size: var(--font-size-tiny);
+  line-height: var(--line-height-tiny);
+  letter-spacing: var(--letter-spacing-tiny);
+  color: var(--bubble-time);
+  white-space: nowrap;
+  user-select: none;
+}

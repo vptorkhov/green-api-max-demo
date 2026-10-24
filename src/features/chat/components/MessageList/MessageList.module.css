@@ -1,0 +1,28 @@
+.scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* Колонка переписки по центру, как в MAX; сообщения прижаты к низу */
+.column {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  max-width: var(--size-content-max-width);
+  min-height: 100%;
+  margin: 0 auto;
+  padding: var(--space-l);
+}
+
+/* «Капсула» на фоне чата — как разделитель дат в MAX */
+.empty {
+  align-self: center;
+  margin: auto 0;
+  padding: var(--space-3xs) var(--space-s-half);
+  border-radius: var(--radius-m-half);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  color: var(--color-text-inverse);
+  background: var(--color-capsule-bg);
+}

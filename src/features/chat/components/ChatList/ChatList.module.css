@@ -1,0 +1,16 @@
+.list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.empty {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl);
+  font-size: var(--font-size-detail);
+  line-height: var(--line-height-detail);
+  text-align: center;
+  color: var(--color-text-tertiary);
+}

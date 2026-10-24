@@ -2,9 +2,9 @@ import { type ReactNode, useCallback, useEffect, useMemo, useReducer } from 'rea
 
 import { useAuthContext } from '@/features/auth';
 
-import type { ChatContextValue, Message, MessageStatus, NewChat } from '../types/chat.types';
-import { chatsReducer, createChatsState } from '../utils/chatsReducer';
-import { readStoredChats, writeStoredChats } from '../utils/chatsStorage';
+import type { ChatContextValue, Message, MessageStatus, NewChat } from '../../types/chat.types';
+import { chatsReducer, createChatsState } from '../../utils/chatsReducer';
+import { readStoredChats, writeStoredChats } from '../../utils/chatsStorage';
 import { ChatContext } from './ChatContext';
 
 type Props = {

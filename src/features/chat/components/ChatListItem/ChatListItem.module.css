@@ -1,0 +1,95 @@
+/* По .cell web.max.ru (refs/tokens.md, «Элемент списка чатов»): сетка аватар | заголовок + время,
+   ниже превью в две строки и счётчик непрочитанных */
+.item {
+  /* Отступы ячейки MAX: 9px по вертикали, 16px по горизонтали */
+  --chat-item-padding-block: 9px;
+
+  display: grid;
+  grid-template-areas:
+    'avatar title time'
+    'avatar preview unread';
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  column-gap: var(--space-m);
+  width: 100%;
+  padding: var(--chat-item-padding-block) var(--space-l);
+  border: none;
+  text-align: left;
+  color: var(--color-text-primary);
+  background: var(--color-bg-primary);
+}
+
+@media (hover: hover) {
+  .item:hover {
+    background: var(--color-bg-hover);
+  }
+}
+
+.item:active {
+  background: var(--color-bg-pressed);
+}
+
+/* Выбранный чат — и при наведении тоже */
+.item.active {
+  background: var(--color-bg-selected);
+}
+
+/* Обводка фокуса внутри ячейки: снаружи её обрезал бы край панели */
+.item:focus-visible {
+  outline-offset: calc(-1 * var(--size-focus-ring) - var(--size-border));
+}
+
+.avatar {
+  display: flex;
+  grid-area: avatar;
+  align-items: center;
+}
+
+.title {
+  grid-area: title;
+  overflow: hidden;
+  font-size: var(--font-size-detail);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-detail);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.time {
+  grid-area: time;
+  align-self: center;
+  font-size: var(--font-size-description);
+  line-height: var(--line-height-description);
+  color: var(--color-text-tertiary);
+}
+
+.preview {
+  display: -webkit-box;
+  grid-area: preview;
+  min-height: calc(2 * var(--line-height-detail));
+  padding-top: var(--space-2xs);
+  overflow: hidden;
+  font-size: var(--font-size-detail);
+  line-height: var(--line-height-detail);
+  color: var(--color-text-tertiary);
+  overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+/* justify-self: без него счётчик растягивается на ширину колонки времени («20 сент. 2025 г.») */
+.unread {
+  grid-area: unread;
+  align-self: center;
+  justify-self: end;
+  min-width: var(--size-icon-small);
+  height: var(--size-icon-small);
+  padding: 0 var(--space-s-half);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--size-icon-small);
+  text-align: center;
+  color: var(--color-text-inverse);
+  background: var(--color-accent);
+}

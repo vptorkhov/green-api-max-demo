@@ -1,0 +1,32 @@
+/* Фон области переписки темы «space»: градиент в светлой теме, сплошной в тёмной (узор MAX не переносим) */
+.panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  background: linear-gradient(to bottom, var(--color-chat-bg-start), var(--color-chat-bg-end));
+}
+
+.composerSlot {
+  flex-shrink: 0;
+  min-height: var(--space-l);
+}
+
+.empty {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-l);
+}
+
+/* «Капсула» как разделитель дат в MAX */
+.capsule {
+  padding: var(--space-3xs) var(--space-s-half);
+  border-radius: var(--radius-m-half);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  text-align: center;
+  color: var(--color-text-inverse);
+  background: var(--color-capsule-bg);
+}

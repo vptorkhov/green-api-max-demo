@@ -4,8 +4,8 @@ import { STORAGE_KEYS } from '@/constants/storageKeys';
 import { useLocalStorageState } from '@/hooks/useLocalStorageState';
 import type { GreenApiCredentials } from '@/types/greenApi.types';
 
-import type { AuthContextValue, LogoutReasonKey } from '../types/auth.types';
-import { isGreenApiCredentials } from '../utils/authGuards';
+import type { AuthContextValue, LogoutReasonKey } from '../../types/auth.types';
+import { isGreenApiCredentials } from '../../utils/authGuards';
 import { AuthContext } from './AuthContext';
 
 type Props = {

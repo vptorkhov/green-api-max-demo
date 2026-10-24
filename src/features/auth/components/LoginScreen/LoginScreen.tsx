@@ -2,10 +2,10 @@ import { useTranslation } from 'react-i18next';
 
 import { GREEN_API_CONSOLE_URL } from '@/constants/greenApi';
 
-import { useAuthContext } from '../hooks/useAuthContext';
-import { useLogin } from '../hooks/useLogin';
-import type { CredentialsFormValues } from '../types/auth.types';
-import { LoginForm } from './LoginForm';
+import { useAuthContext } from '../../hooks/useAuthContext';
+import { useLogin } from '../../hooks/useLogin';
+import type { CredentialsFormValues } from '../../types/auth.types';
+import { LoginForm } from '../LoginForm/LoginForm';
 
 import styles from './LoginScreen.module.css';
 

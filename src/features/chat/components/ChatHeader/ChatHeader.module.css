@@ -1,0 +1,31 @@
+/* Шапка чата MAX: высота 64px, отступы 12 / 16, разделитель снизу */
+.header {
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--space-m);
+  align-items: center;
+  min-height: var(--size-header-height);
+  padding: var(--space-m) var(--space-l);
+  border-bottom: var(--size-border) solid var(--color-divider);
+  background: var(--color-bg-primary);
+}
+
+.info {
+  min-width: 0;
+}
+
+.title {
+  overflow: hidden;
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-body);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.subtitle {
+  font-size: var(--font-size-description);
+  line-height: var(--line-height-description);
+  letter-spacing: var(--letter-spacing-small);
+  color: var(--color-text-tertiary);
+}

@@ -1,12 +1,12 @@
 import { type ChangeEvent, type FormEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Button } from '@/components/ui/Button';
-import { ErrorMessage } from '@/components/ui/ErrorMessage';
-import { IconButton } from '@/components/ui/IconButton';
+import { Button } from '@/components/ui/Button/Button';
+import { ErrorMessage } from '@/components/ui/ErrorMessage/ErrorMessage';
+import { IconButton } from '@/components/ui/IconButton/IconButton';
 import { EyeIcon } from '@/components/ui/icons/EyeIcon';
 import { EyeOffIcon } from '@/components/ui/icons/EyeOffIcon';
-import { TextField } from '@/components/ui/TextField';
+import { TextField } from '@/components/ui/TextField/TextField';
 import { DEFAULT_API_URL } from '@/constants/greenApi';
 
 import type {
@@ -14,7 +14,7 @@ import type {
   CredentialsFieldErrors,
   CredentialsFormValues,
   LoginScreenErrorKey,
-} from '../types/auth.types';
+} from '../../types/auth.types';
 
 import styles from './LoginForm.module.css';
 

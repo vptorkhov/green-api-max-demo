@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-import type { AuthContextValue } from '../types/auth.types';
+import type { AuthContextValue } from '../../types/auth.types';
 
 // Отдельный файл, а не AuthProvider.tsx: файл компонента должен экспортировать только компоненты,
 // иначе Fast Refresh перезагружает страницу целиком (react-refresh, ProjectRules §2).

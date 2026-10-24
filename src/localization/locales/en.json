@@ -55,6 +55,12 @@
     },
     "chat": {
       "title": "Chats",
+      "newChat": "New chat",
+      "emptyList": "No chats yet — create a new one",
+      "selectChat": "Select a chat or create a new one",
+      "noMessages": "No messages",
+      "unknownContact": "Contact",
+      "unreadCount": "Unread: {{count}}",
       "phoneValidation": {
         "required": "Enter a phone number.",
         "invalid": "Enter a Russian (+7, 11 digits) or Belarusian (+375, 12 digits) number."

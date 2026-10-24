@@ -1,0 +1,28 @@
+/* Круг акцентного цвета, как аватар «Избранного» в MAX */
+.avatar {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-round);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-inverse);
+  background: var(--color-accent);
+  user-select: none;
+}
+
+.list {
+  --icon-size: var(--size-icon);
+
+  width: var(--size-avatar-list);
+  height: var(--size-avatar-list);
+  font-size: var(--font-size-header);
+}
+
+.header {
+  --icon-size: var(--size-icon-small);
+
+  width: var(--size-avatar-header);
+  height: var(--size-avatar-header);
+  font-size: var(--font-size-body);
+}

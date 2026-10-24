@@ -2,7 +2,7 @@ import type { ComponentProps } from 'react';
 
 import { joinClassNames } from '@/utils/joinClassNames';
 
-import { Spinner } from './Spinner';
+import { Spinner } from '../Spinner/Spinner';
 
 import styles from './Button.module.css';
 

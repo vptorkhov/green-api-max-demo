@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import { ChatContext } from '../components/ChatContext';
+import { ChatContext } from '../components/ChatProvider/ChatContext';
 
 // Доступ к чатам и сообщениям. Вне ChatProvider — ошибка, а не тихий null
 export function useChatContext() {
