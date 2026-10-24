@@ -1,3 +1,5 @@
+import type ru from '@/localization/locales/ru.json';
+
 // Доменные типы чата. От формы Message зависят список сообщений, хранилище (п. 5.3),
 // отправка (этап 6) и получение (этап 7)
 
@@ -51,3 +53,7 @@ export type ChatsState = {
   // Не сохраняется между сессиями (п. 5.3)
   activeChatId: string | null;
 };
+
+// Ключ ошибки номера телефона в форме создания чата (выводится из ru.json)
+export type PhoneValidationErrorKey =
+  `pages.chat.phoneValidation.${keyof (typeof ru)['pages']['chat']['phoneValidation']}`;
