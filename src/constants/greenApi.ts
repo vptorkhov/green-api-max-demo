@@ -9,3 +9,6 @@ export const REQUEST_TIMEOUT_MS = 15_000;
 
 // Личный кабинет GREEN-API: там idInstance, apiTokenInstance и apiUrl инстанса
 export const GREEN_API_CONSOLE_URL = 'https://console.green-api.com';
+
+// Максимальная длина текста sendMessage: длиннее — 400 Validation failed (GreenApiNotes.md §5)
+export const MAX_MESSAGE_LENGTH = 4000;

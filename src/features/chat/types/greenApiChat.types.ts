@@ -11,3 +11,15 @@ export type CheckAccountResponse = {
   chatId: string;
   fromCache: boolean;
 };
+
+// chatId — только из checkAccount или уведомления; формат «номер@c.us» не используем:
+// уведомления придут с числовым chatId, а на тарифе Developer это второй чат (GreenApiNotes.md §3)
+export type SendMessageRequest = {
+  chatId: string;
+  message: string;
+};
+
+// {"idMessage":"1792758930622"}. HTTP 200 — сообщение принято в очередь, а не доставлено (GreenApiNotes.md §5)
+export type SendMessageResponse = {
+  idMessage: string;
+};
