@@ -65,7 +65,9 @@ export function getErrorKindByStatus(status: number, bodyText = ''): GreenApiErr
     return 'notFound';
   }
 
-  if (status === 429) {
+  // 469 — нестандартный код checkAccount: MAX ограничил частые проверки номеров
+  // (api-docs/service/CheckAccount.md)
+  if (status === 429 || status === 469) {
     return 'rateLimit';
   }
 

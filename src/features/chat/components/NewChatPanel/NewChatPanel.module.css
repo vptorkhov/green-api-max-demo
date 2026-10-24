@@ -1,0 +1,46 @@
+/* Панель занимает место шапки и списка боковой колонки */
+.panel {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* Высота и отступы — как у шапки переписки */
+.header {
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--space-s);
+  align-items: center;
+  min-height: var(--size-header-height);
+  padding: var(--space-m) var(--space-l) var(--space-m) var(--space-s);
+}
+
+.title {
+  overflow: hidden;
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-body);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.form {
+  overflow-y: auto;
+  padding: var(--space-s) var(--space-l) var(--space-l);
+}
+
+/* fieldset нужен только для блокировки полей — браузерное оформление убрано */
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.submit {
+  width: 100%;
+}

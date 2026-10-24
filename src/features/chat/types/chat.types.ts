@@ -58,6 +58,9 @@ export type ChatsState = {
 export type PhoneValidationErrorKey =
   `pages.chat.phoneValidation.${keyof (typeof ru)['pages']['chat']['phoneValidation']}`;
 
+// Ошибка под полем номера: номер не прошёл проверку или у него нет аккаунта MAX (checkAccount)
+export type PhoneFieldErrorKey = PhoneValidationErrorKey | 'pages.chat.newChatForm.noAccount';
+
 // Сохраняемая часть состояния: активный чат между сессиями не запоминается
 export type StoredChats = Pick<ChatsState, 'chats' | 'messages'>;
 

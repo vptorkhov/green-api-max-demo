@@ -1,6 +1,7 @@
-import { isNumber, isRecord, isString } from '@/utils/typeGuards';
+import { isBoolean, isNumber, isRecord, isString } from '@/utils/typeGuards';
 
 import type { Chat, Message, MessageStatus, StoredChats } from '../types/chat.types';
+import type { CheckAccountResponse } from '../types/greenApiChat.types';
 
 // Record по всем значениям MessageStatus: забытый статус — ошибка TypeScript
 const KNOWN_MESSAGE_STATUSES: Record<MessageStatus, true> = {
@@ -62,4 +63,15 @@ export function isStoredChats(value: unknown): value is StoredChats {
   );
 
   return areChatsValid && areMessagesValid;
+}
+
+// Ответ checkAccount. exist: true с пустым chatId — неожиданный ответ: такой чат нельзя открыть
+export function isCheckAccountResponse(value: unknown): value is CheckAccountResponse {
+  return (
+    isRecord(value) &&
+    isBoolean(value.exist) &&
+    isString(value.chatId) &&
+    isBoolean(value.fromCache) &&
+    (!value.exist || value.chatId !== '')
+  );
 }

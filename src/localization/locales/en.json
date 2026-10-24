@@ -64,6 +64,14 @@
       "phoneValidation": {
         "required": "Enter a phone number.",
         "invalid": "Enter a Russian (+7, 11 digits) or Belarusian (+375, 12 digits) number."
+      },
+      "newChatForm": {
+        "title": "Find by number",
+        "phone": "Phone number",
+        "phonePlaceholder": "+7 900 123-45-67",
+        "phoneHint": "A Russian (+7) or Belarusian (+375) number.",
+        "submit": "Find",
+        "noAccount": "This number has no MAX account."
       }
     }
   }
