@@ -4,8 +4,10 @@ import type { Chat, Message, MessageStatus, StoredChats } from '../types/chat.ty
 import type {
   CheckAccountResponse,
   DeleteNotificationResponse,
+  GetSettingsResponse,
   SendMessageResponse,
 } from '../types/greenApiChat.types';
+import { NOTIFICATION_SETTING_KEYS } from './getDisabledNotificationSettings';
 
 // Record по всем значениям MessageStatus: забытый статус — ошибка TypeScript
 const KNOWN_MESSAGE_STATUSES: Record<MessageStatus, true> = {
@@ -87,4 +89,9 @@ export function isSendMessageResponse(value: unknown): value is SendMessageRespo
 
 export function isDeleteNotificationResponse(value: unknown): value is DeleteNotificationResponse {
   return isRecord(value) && isBoolean(value.result);
+}
+
+// Ответ getSettings: проверяются только флаги уведомлений, остальные поля не используются
+export function isGetSettingsResponse(value: unknown): value is GetSettingsResponse {
+  return isRecord(value) && NOTIFICATION_SETTING_KEYS.every((key) => isString(value[key]));
 }

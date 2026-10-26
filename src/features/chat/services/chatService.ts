@@ -5,12 +5,14 @@ import type { GreenApiCredentials } from '@/types/greenApi.types';
 import type {
   CheckAccountRequest,
   CheckAccountResponse,
+  GetSettingsResponse,
   SendMessageRequest,
 } from '../types/greenApiChat.types';
 import type { ReceiveNotificationResponse } from '../types/notification.types';
 import {
   isCheckAccountResponse,
   isDeleteNotificationResponse,
+  isGetSettingsResponse,
   isSendMessageResponse,
 } from '../utils/chatGuards';
 import { isReceiveNotificationResponse } from '../utils/notificationGuards';
@@ -72,6 +74,18 @@ export const chatService = {
     await greenApiClient.delete(credentials, 'deleteNotification', {
       guard: isDeleteNotificationResponse,
       pathParam: receiptId,
+      signal,
+    });
+  },
+
+  // Настройки инстанса: включены ли нужные уведомления (п. 7.7). Без месячного лимита,
+  // частота — 1 запрос в секунду (GreenApiNotes.md §10), поэтому вызывается один раз на экран
+  getSettings(
+    credentials: GreenApiCredentials,
+    signal?: AbortSignal,
+  ): Promise<GetSettingsResponse> {
+    return greenApiClient.get(credentials, 'getSettings', {
+      guard: isGetSettingsResponse,
       signal,
     });
   },

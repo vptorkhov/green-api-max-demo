@@ -12,6 +12,7 @@
       "unauthorized": "Invalid idInstance or apiTokenInstance.",
       "notFound": "API method not found. Check the API URL.",
       "validation": "The server rejected the request: invalid data.",
+      "webhookUrlSet": "A webhookUrl is set in the instance settings — notifications go there and the app does not receive them. Clear the field in the GREEN-API console.",
       "instanceUnavailable": "The instance is unavailable: it is starting, not authorized, expired or deleted. Check it in the GREEN-API console.",
       "rateLimit": "Too many requests. Try again a bit later.",
       "quotaExceeded": "GREEN-API plan limit exceeded.",
@@ -84,6 +85,16 @@
       },
       "connection": {
         "reconnecting": "No connection, reconnecting…"
+      },
+      "notificationSettings": {
+        "disabled": "Notifications are turned off in the instance settings: {{settings, list}}. Turn them on in the GREEN-API console — settings take effect within 5 minutes.",
+        "names": {
+          "incomingWebhook": "incoming messages",
+          "outgoingAPIMessageWebhook": "messages sent via API",
+          "outgoingMessageWebhook": "messages sent from the phone",
+          "outgoingWebhook": "outgoing message statuses",
+          "stateWebhook": "instance status changes"
+        }
       }
     }
   }

@@ -28,3 +28,15 @@ export type SendMessageResponse = {
 export type DeleteNotificationResponse = {
   result: boolean;
 };
+
+// Настройки инстанса, без которых приложение не получает нужные уведомления (GreenApiNotes.md §11).
+// В новом инстансе все выключены
+export type NotificationSettingKey =
+  | 'incomingWebhook'
+  | 'outgoingAPIMessageWebhook'
+  | 'outgoingMessageWebhook'
+  | 'outgoingWebhook'
+  | 'stateWebhook';
+
+// Ответ getSettings — только используемые поля. Флаги — строки "yes" / "no"
+export type GetSettingsResponse = Record<NotificationSettingKey, string>;

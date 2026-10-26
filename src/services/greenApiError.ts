@@ -5,6 +5,7 @@ export type GreenApiErrorKind =
   | 'unauthorized'
   | 'notFound'
   | 'validation'
+  | 'webhookUrlSet'
   | 'instanceUnavailable'
   | 'rateLimit'
   | 'quotaExceeded'
@@ -45,8 +46,12 @@ const INSTANCE_UNAVAILABLE_MARKERS = [
   'instance is deleted',
 ];
 
+// Текст 400 receiveNotification: «Message cannot be received because custom webhook url is set»
+// (GreenApiNotes.md §6)
+const WEBHOOK_URL_SET_MARKER = 'custom webhook url is set';
+
 // Сопоставление HTTP-кода с kind по таблице GreenApiNotes.md §9.
-// bodyText нужен только для 400: им различаются validation и instanceUnavailable.
+// bodyText нужен только для 400: им различаются validation, instanceUnavailable и webhookUrlSet.
 export function getErrorKindByStatus(status: number, bodyText = ''): GreenApiErrorKind {
   if (status === 400) {
     const normalizedBody = bodyText.toLowerCase();
@@ -54,7 +59,12 @@ export function getErrorKindByStatus(status: number, bodyText = ''): GreenApiErr
       normalizedBody.includes(marker),
     );
 
-    return isInstanceUnavailable ? 'instanceUnavailable' : 'validation';
+    if (isInstanceUnavailable) {
+      return 'instanceUnavailable';
+    }
+
+    // В настройках инстанса задан webhookUrl: уведомления уходят туда, HTTP API их не отдаёт (п. 7.7)
+    return normalizedBody.includes(WEBHOOK_URL_SET_MARKER) ? 'webhookUrlSet' : 'validation';
   }
 
   if (status === 401 || status === 403) {

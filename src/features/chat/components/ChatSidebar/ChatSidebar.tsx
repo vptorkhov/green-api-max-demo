@@ -9,6 +9,7 @@ import { useAuthContext } from '@/features/auth';
 import { joinClassNames } from '@/utils/joinClassNames';
 
 import { useChatContext } from '../../hooks/useChatContext';
+import { useNotificationSettingsCheck } from '../../hooks/useNotificationSettingsCheck';
 import { ChatList } from '../ChatList/ChatList';
 import { NewChatPanel } from '../NewChatPanel/NewChatPanel';
 
@@ -17,10 +18,12 @@ import styles from './ChatSidebar.module.css';
 // Левая колонка: шапка «Чаты» с кнопками и список. Кнопка «+» открывает панель «Найти по номеру»
 // поверх списка — меню MAX (группа, канал, звонок…) не нужно, сценарий у нас один (п. 5.5).
 // Индикатор соединения (п. 7.6): при ошибке опроса заголовок уменьшается и под ним строка
-// «Нет соединения…», как в MAX; причина — блоком под шапкой. В нормальном состоянии ничего нет
+// «Нет соединения…», как в MAX; причина — блоком под шапкой. В нормальном состоянии ничего нет.
+// Там же предупреждение о выключенных уведомлениях в настройках инстанса (п. 7.7)
 export function ChatSidebar() {
   const { logout } = useAuthContext();
   const { connectionError, isQuotaExceeded } = useChatContext();
+  const { disabledSettings } = useNotificationSettingsCheck();
   const { t } = useTranslation();
 
   const [isNewChatOpen, setIsNewChatOpen] = useState(false);
@@ -71,6 +74,16 @@ export function ChatSidebar() {
           {/* Лимит тарифа держится до конца сессии: соединение при этом в порядке (п. 7.5) */}
           {isQuotaExceeded && (
             <ErrorMessage className={styles.alert} message={t('common.errors.quotaExceeded')} />
+          )}
+          {disabledSettings.length > 0 && (
+            <ErrorMessage
+              className={styles.alert}
+              message={t('pages.chat.notificationSettings.disabled', {
+                settings: disabledSettings.map((key) =>
+                  t(`pages.chat.notificationSettings.names.${key}`),
+                ),
+              })}
+            />
           )}
           <ChatList />
         </>
