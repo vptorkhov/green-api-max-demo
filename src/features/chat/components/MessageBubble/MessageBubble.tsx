@@ -1,10 +1,11 @@
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import type { ErrorMessageKey } from '@/utils/getErrorMessageKey';
 import { joinClassNames } from '@/utils/joinClassNames';
 
 import { MESSAGE_STATUS_ICONS } from '../../constants/messageStatusIcons';
-import type { Message } from '../../types/chat.types';
+import type { Message, OutgoingMessage } from '../../types/chat.types';
 import { formatMessageTime } from '../../utils/formatDate';
 
 import styles from './MessageBubble.module.css';
@@ -15,13 +16,21 @@ type Props = {
   errorKey: ErrorMessageKey | null;
   // Повтор блокируется, пока отправляется другое сообщение (п. 6.3)
   isRetryDisabled: boolean;
-  onRetry: (messageId: string) => void;
+  onRetry: (message: OutgoingMessage) => void;
 };
 
 // Пузырь сообщения: входящие слева, исходящие справа, время внутри справа снизу.
 // У исходящего рядом со временем статус: часы, галочка или ошибка. Под неотправленным —
-// «Не отправлено», причина (если известна) и «Повторить»
-export function MessageBubble({ message, errorKey, isRetryDisabled, onRetry }: Props) {
+// «Не отправлено», причина (если известна) и «Повторить».
+// memo: новое сообщение перерисовывало все пузыри переписки (Profiler, п. 8.9). Props стабильны:
+// объекты сообщений хранилище не пересоздаёт, onRetry — useCallback, isRetryDisabled меняется
+// только у неотправленных (MessageList)
+export const MessageBubble = memo(function MessageBubble({
+  message,
+  errorKey,
+  isRetryDisabled,
+  onRetry,
+}: Props) {
   const { t, i18n } = useTranslation();
 
   const isOutgoing = message.direction === 'outgoing';
@@ -36,7 +45,9 @@ export function MessageBubble({ message, errorKey, isRetryDisabled, onRetry }: P
   const dateTime = new Date(message.timestamp).toISOString();
 
   function handleRetryClick() {
-    onRetry(message.id);
+    if (message.direction === 'outgoing') {
+      onRetry(message);
+    }
   }
 
   return (
@@ -78,4 +89,4 @@ export function MessageBubble({ message, errorKey, isRetryDisabled, onRetry }: P
       )}
     </div>
   );
-}
+});

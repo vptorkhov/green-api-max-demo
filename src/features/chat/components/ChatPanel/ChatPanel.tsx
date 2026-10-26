@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { joinClassNames } from '@/utils/joinClassNames';
@@ -6,6 +6,7 @@ import { joinClassNames } from '@/utils/joinClassNames';
 import { useChatContext } from '../../hooks/useChatContext';
 import { useChatHistory } from '../../hooks/useChatHistory';
 import { useSendMessage } from '../../hooks/useSendMessage';
+import type { OutgoingMessage } from '../../types/chat.types';
 import { ChatHeader } from '../ChatHeader/ChatHeader';
 import { MessageComposer } from '../MessageComposer/MessageComposer';
 import { MessageList } from '../MessageList/MessageList';
@@ -46,11 +47,13 @@ export function ChatPanel() {
     selectChat(null);
   }
 
-  function handleRetry(messageId: string) {
-    if (activeChat !== undefined) {
-      void retryMessage(activeChat.chatId, messageId);
-    }
-  }
+  // useCallback — props мемоизированного MessageBubble (п. 8.9). Чат берётся из сообщения
+  const handleRetry = useCallback(
+    (message: OutgoingMessage) => {
+      void retryMessage(message);
+    },
+    [retryMessage],
+  );
 
   return (
     <section className={joinClassNames(styles.panel, !hasActiveChat && styles.withoutActiveChat)}>

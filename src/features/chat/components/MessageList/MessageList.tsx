@@ -6,7 +6,7 @@ import { ArrowDownIcon } from '@/components/ui/icons/ArrowDownIcon';
 import type { ErrorMessageKey } from '@/utils/getErrorMessageKey';
 
 import { useAutoScroll } from '../../hooks/useAutoScroll';
-import type { Message } from '../../types/chat.types';
+import type { Message, OutgoingMessage } from '../../types/chat.types';
 import { isSameDay } from '../../utils/formatDate';
 import { DateSeparator } from '../DateSeparator/DateSeparator';
 import { HistoryStatus } from '../HistoryStatus/HistoryStatus';
@@ -20,7 +20,7 @@ type Props = {
   sendErrorKey: ErrorMessageKey | null;
   failedMessageId: string | null;
   isRetryDisabled: boolean;
-  onRetry: (messageId: string) => void;
+  onRetry: (message: OutgoingMessage) => void;
   // Загрузка истории с сервера (п. 7.10)
   isHistoryLoading: boolean;
   historyErrorKey: ErrorMessageKey | null;
@@ -69,6 +69,9 @@ export function MessageList({
             const isNewDay =
               previousMessage === undefined ||
               !isSameDay(previousMessage.timestamp, message.timestamp);
+            // Блокировка повтора нужна только неотправленным: у остальных пропс не меняется,
+            // и мемоизированные пузыри не перерисовываются на каждой отправке (п. 8.9)
+            const isFailed = message.direction === 'outgoing' && message.status === 'failed';
 
             return (
               <Fragment key={message.id}>
@@ -76,7 +79,7 @@ export function MessageList({
                 <MessageBubble
                   message={message}
                   errorKey={message.id === failedMessageId ? sendErrorKey : null}
-                  isRetryDisabled={isRetryDisabled}
+                  isRetryDisabled={isFailed && isRetryDisabled}
                   onRetry={onRetry}
                 />
               </Fragment>

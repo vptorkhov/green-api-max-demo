@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { VisuallyHidden } from '@/components/ui/VisuallyHidden/VisuallyHidden';
@@ -20,8 +21,15 @@ type Props = {
 
 // Строка списка как в MAX: аватар, имя или номер, превью последнего сообщения, время (со статусом
 // последнего исходящего), непрочитанные.
-// data-chat-id — чтобы ChatList вернул фокус на строку закрытого чата (п. 8.7)
-export function ChatListItem({ chat, lastMessage, isActive, onSelect }: Props) {
+// data-chat-id — чтобы ChatList вернул фокус на строку закрытого чата (п. 8.7).
+// memo: новое сообщение перерисовывало все строки списка (Profiler, п. 8.9). Props стабильны:
+// хранилище пересоздаёт только изменившийся чат, onSelect — selectChat из провайдера (useCallback)
+export const ChatListItem = memo(function ChatListItem({
+  chat,
+  lastMessage,
+  isActive,
+  onSelect,
+}: Props) {
   const { t, i18n } = useTranslation();
 
   const title = getChatTitle(chat) ?? t('pages.chat.unknownContact');
@@ -75,4 +83,4 @@ export function ChatListItem({ chat, lastMessage, isActive, onSelect }: Props) {
       )}
     </button>
   );
-}
+});
