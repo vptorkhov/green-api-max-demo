@@ -56,6 +56,12 @@
   }
 }
 
+@media (hover: hover) {
+  .input:not(:checked):hover + .text {
+    color: var(--color-text-primary);
+  }
+}
+
 .input:checked + .text {
   color: var(--color-text-primary);
   background: var(--color-bg-primary);

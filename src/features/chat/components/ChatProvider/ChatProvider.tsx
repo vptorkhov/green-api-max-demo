@@ -3,6 +3,7 @@ import { type ReactNode, useCallback, useEffect, useMemo, useReducer, useState }
 import { getInstanceStateErrorKey, useAuthContext } from '@/features/auth';
 
 import { useNotificationsPolling } from '../../hooks/useNotificationsPolling';
+import { useUnreadDocumentTitle } from '../../hooks/useUnreadDocumentTitle';
 import type { ChatContextValue, Message, MessageStatus, NewChat } from '../../types/chat.types';
 import type { NotificationEvent } from '../../types/notification.types';
 import { chatsReducer, createChatsState } from '../../utils/chatsReducer';
@@ -30,6 +31,10 @@ export function ChatProvider({ children }: Props) {
   );
   const { chats, messages, activeChatId } = state;
   const [isQuotaExceeded, setIsQuotaExceeded] = useState(false);
+
+  // Сумма непрочитанных по всем чатам — в заголовок вкладки (п. 8.8)
+  const unreadCount = Object.values(chats).reduce((sum, chat) => sum + chat.unreadCount, 0);
+  useUnreadDocumentTitle(unreadCount);
 
   // dispatch стабилен, поэтому функции создаются один раз — значение контекста мемоизируется (§13)
   const createChat = useCallback((chat: NewChat) => {

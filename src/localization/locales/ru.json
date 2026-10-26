@@ -1,6 +1,7 @@
 {
   "common": {
     "appTitle": "Чат MAX через GREEN-API",
+    "appTitleWithUnread": "({{count}}) {{title}}",
     "loading": "Загрузка…",
     "actions": {
       "back": "Назад",

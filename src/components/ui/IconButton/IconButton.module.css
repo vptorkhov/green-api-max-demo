@@ -31,10 +31,10 @@
 .primary {
   --button-color: var(--color-icon-inverse);
   --button-color-disabled: var(--color-text-inverse-disabled);
-  --button-bg: var(--color-accent);
-  --button-bg-hover: var(--color-accent-hover);
-  --button-bg-pressed: var(--color-accent-pressed);
-  --button-bg-disabled: var(--color-accent-disabled);
+  --button-bg: var(--color-button-primary);
+  --button-bg-hover: var(--color-button-primary-hover);
+  --button-bg-pressed: var(--color-button-primary-pressed);
+  --button-bg-disabled: var(--color-button-primary-disabled);
 }
 
 .ghost {

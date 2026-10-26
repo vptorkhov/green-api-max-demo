@@ -62,8 +62,10 @@
   white-space: nowrap;
 }
 
-.link:hover {
-  text-decoration: underline;
+@media (hover: hover) {
+  .link:hover {
+    text-decoration: underline;
+  }
 }
 
 /* Язык и тема под карточкой — компактно, в строку; на узком экране переносятся друг под друга */

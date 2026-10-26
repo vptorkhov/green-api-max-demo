@@ -46,3 +46,9 @@
   background: none;
   cursor: pointer;
 }
+
+@media (hover: hover) {
+  .retry:hover:not(:disabled) {
+    text-decoration: none;
+  }
+}

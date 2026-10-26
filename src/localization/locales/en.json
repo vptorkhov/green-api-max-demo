@@ -1,6 +1,7 @@
 {
   "common": {
     "appTitle": "MAX chat via GREEN-API",
+    "appTitleWithUnread": "({{count}}) {{title}}",
     "loading": "Loading…",
     "actions": {
       "back": "Back",

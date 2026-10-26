@@ -120,6 +120,12 @@
   cursor: pointer;
 }
 
+@media (hover: hover) {
+  .retry:hover:not(:disabled) {
+    text-decoration: none;
+  }
+}
+
 .retry:disabled {
   color: var(--color-text-inverse-disabled);
   cursor: default;

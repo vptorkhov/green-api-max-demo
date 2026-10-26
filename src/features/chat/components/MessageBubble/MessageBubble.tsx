@@ -1,22 +1,13 @@
 import { useTranslation } from 'react-i18next';
 
-import { AlertIcon } from '@/components/ui/icons/AlertIcon';
-import { CheckIcon } from '@/components/ui/icons/CheckIcon';
-import { ClockIcon } from '@/components/ui/icons/ClockIcon';
 import type { ErrorMessageKey } from '@/utils/getErrorMessageKey';
 import { joinClassNames } from '@/utils/joinClassNames';
 
-import type { Message, MessageStatus } from '../../types/chat.types';
+import { MESSAGE_STATUS_ICONS } from '../../constants/messageStatusIcons';
+import type { Message } from '../../types/chat.types';
 import { formatMessageTime } from '../../utils/formatDate';
 
 import styles from './MessageBubble.module.css';
-
-// Record по всем статусам: забытый статус — ошибка TypeScript
-const STATUS_ICONS: Record<MessageStatus, typeof CheckIcon> = {
-  sending: ClockIcon,
-  sent: CheckIcon,
-  failed: AlertIcon,
-};
 
 type Props = {
   message: Message;
@@ -35,7 +26,7 @@ export function MessageBubble({ message, errorKey, isRetryDisabled, onRetry }: P
 
   const isOutgoing = message.direction === 'outgoing';
   const status = isOutgoing ? message.status : null;
-  const StatusIcon = status === null ? null : STATUS_ICONS[status];
+  const StatusIcon = status === null ? null : MESSAGE_STATUS_ICONS[status];
   const statusLabel = status === null ? '' : t(`pages.chat.messageStatus.${status}`);
   const hasStatus = StatusIcon !== null;
   const isFailed = status === 'failed';

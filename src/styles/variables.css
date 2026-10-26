@@ -122,12 +122,21 @@
   /* Цвета: линии и фокус */
   --color-divider: #0c0d0e0f;
   --color-focus: #6d92ca;
+  /* Ползунок полос прокрутки: в рефах MAX нет — приглушённый цвет иконок, свои значения */
+  --color-scrollbar-thumb: #0607083d;
 
   /* Цвета: кнопки */
   --color-accent: #007aff;
   --color-accent-hover: #479fff;
   --color-accent-pressed: #006ee5;
   --color-accent-disabled: #007aff7a;
+  /* Основная кнопка. MAX: #007aff / hover #479fff / pressed #006ee5 — белый текст 4,0:1 и 2,7:1;
+     потемнее до 4,5:1 (WCAG AA, п. 8.8). Hover, как в MAX, светлее, pressed — темнее.
+     Аватар и счётчик непрочитанных остаются цвета --color-accent */
+  --color-button-primary: #006be1;
+  --color-button-primary-hover: #0072ed;
+  --color-button-primary-pressed: #0062cf;
+  --color-button-primary-disabled: #006be17a;
   --color-ghost-hover: #0d0d0d0a;
   --color-ghost-pressed: #0d0d0d14;
   /* Вторичная кнопка: в рефах MAX нет — оттенок акцентного цвета, свои значения */
@@ -188,11 +197,16 @@
 
   --color-divider: #ffffff0f;
   --color-focus: #709ada;
+  --color-scrollbar-thumb: #ffffff3d;
 
   --color-accent: #007aff;
   --color-accent-hover: #479fff;
   --color-accent-pressed: #006ee5;
   --color-accent-disabled: #ffffff1f;
+  --color-button-primary: #006be1;
+  --color-button-primary-hover: #0072ed;
+  --color-button-primary-pressed: #0062cf;
+  --color-button-primary-disabled: #ffffff1f;
   --color-ghost-hover: #e7e7e70a;
   --color-ghost-pressed: #e7e7e714;
   --color-secondary: #ffffff17;

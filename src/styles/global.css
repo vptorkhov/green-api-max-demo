@@ -62,6 +62,25 @@ button:disabled {
   cursor: default;
 }
 
+/* Тонкие полосы прокрутки в цвет темы (п. 8.8). scrollbar-color наследуется, scrollbar-width — нет */
+:root {
+  scrollbar-color: var(--color-scrollbar-thumb) transparent;
+}
+
+* {
+  scrollbar-width: thin;
+}
+
+/* Без плавных переходов, если пользователь просил уменьшить анимацию. Спиннер не трогаем:
+   это индикатор загрузки, а не украшение */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0s !important;
+  }
+}
+
 img,
 svg {
   display: block;
