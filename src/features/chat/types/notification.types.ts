@@ -1,5 +1,7 @@
 import type { InstanceState } from '@/features/auth';
 
+import type { IncomingMessage, NewChat, OutgoingMessage } from './chat.types';
+
 // Уведомления GREEN-API (HTTP API). Формы — по реальным JSON и документации (GreenApiNotes.md §6–7).
 // Описаны только поля, которые используются дальше (п. 7.3–7.5); прочие не типизируются.
 // Данные из сети приходят как unknown и сужаются guard'ами из utils/notificationGuards.ts
@@ -76,3 +78,26 @@ export type NotificationBody =
   | OutgoingMessageStatusNotification
   | StateInstanceChangedNotification
   | QuotaExceededNotification;
+
+// Почему уведомление не меняет хранилище. Технические значения: в интерфейс не попадают
+export type IgnoreReason =
+  // Неизвестный typeWebhook или уведомление обрабатываемого вида не прошло проверку формы
+  | 'unsupportedType'
+  | 'malformed'
+  // Ожидаемые: приложение показывает только текст в личных чатах (требование задания)
+  | 'nonTextMessage'
+  | 'emptyText'
+  | 'nonPersonalChat'
+  // Статусы delivered / read / notInGroup и stateInstanceChanged authorized — менять нечего
+  | 'statusNotHandled'
+  | 'instanceAuthorized';
+
+// Результат разбора уведомления (п. 7.3). chat — данные для создания чата, если его ещё нет (п. 7.5)
+export type NotificationEvent =
+  | { type: 'messageReceived'; message: IncomingMessage; chat: NewChat }
+  | { type: 'messageSent'; message: OutgoingMessage; chat: NewChat }
+  | { type: 'messageFailed'; chatId: string; messageId: string }
+  | { type: 'instanceStateChanged'; stateInstance: Exclude<InstanceState, 'authorized'> }
+  | { type: 'quotaExceeded' }
+  // isUnexpected — неизвестный или битый формат: цикл опроса пишет console.warn (п. 7.4)
+  | { type: 'ignored'; reason: IgnoreReason; isUnexpected: boolean };
