@@ -1,0 +1,26 @@
+/* Точка отсчёта для выпадающей панели */
+.menu {
+  /* Ширина панели: варианты «Системная / Светлая / Тёмная» (п. 8.5) в одну строку */
+  --settings-panel-width: 280px;
+
+  position: relative;
+  display: flex;
+}
+
+/* Выпадающая панель — как .dropdown в MAX: фон панели, скругление, тень. Рамка — для тёмной темы:
+   там панель того же цвета, что и боковая, и тень край почти не выделяет */
+.panel {
+  position: absolute;
+  top: calc(100% + var(--space-xs));
+  right: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+  width: var(--settings-panel-width);
+  padding: var(--space-l);
+  border: var(--size-border) solid var(--color-divider);
+  border-radius: var(--radius-l);
+  background: var(--color-bg-primary);
+  box-shadow: var(--shadow-dropdown);
+}

@@ -60,6 +60,9 @@
   --radius-bubble: var(--radius-l);
   --radius-bubble-stack: var(--radius-s-half);
 
+  /* Тени */
+  --shadow-dropdown: 0 16px 16px #00000029, 0 0 8px #0000001f;
+
   /* Размеры */
   --size-border: 1px;
   --size-focus-ring: 2px;

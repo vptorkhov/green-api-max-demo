@@ -12,6 +12,7 @@ import { useChatContext } from '../../hooks/useChatContext';
 import { useNotificationSettingsCheck } from '../../hooks/useNotificationSettingsCheck';
 import { ChatList } from '../ChatList/ChatList';
 import { NewChatPanel } from '../NewChatPanel/NewChatPanel';
+import { SettingsMenu } from '../SettingsMenu/SettingsMenu';
 
 import styles from './ChatSidebar.module.css';
 
@@ -55,6 +56,7 @@ export function ChatSidebar() {
                 <p className={styles.connectionStatus}>{t('pages.chat.connection.reconnecting')}</p>
               )}
             </div>
+            <SettingsMenu />
             <IconButton
               label={t('pages.chat.newChat')}
               icon={<PlusIcon />}

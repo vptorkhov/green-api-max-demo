@@ -26,6 +26,15 @@
       "reload": "Перезагрузить"
     }
   },
+  "components": {
+    "languageSelect": {
+      "label": "Язык",
+      "languages": {
+        "ru": "Русский",
+        "en": "English"
+      }
+    }
+  },
   "pages": {
     "auth": {
       "title": "Вход",
@@ -109,6 +118,9 @@
       "dateSeparator": {
         "today": "Сегодня",
         "yesterday": "Вчера"
+      },
+      "settings": {
+        "title": "Настройки"
       }
     }
   }

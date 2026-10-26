@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
+import { LanguageSelect } from '@/components/LanguageSelect/LanguageSelect';
 import { GREEN_API_CONSOLE_URL } from '@/constants/greenApi';
 
 import { useAuthContext } from '../../hooks/useAuthContext';
@@ -45,6 +46,8 @@ export function LoginScreen() {
           </a>
         </p>
       </section>
+      {/* Язык — до входа: экран входа тоже должен быть понятен (п. 8.4) */}
+      <LanguageSelect className={styles.preferences} />
     </main>
   );
 }
