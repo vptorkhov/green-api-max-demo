@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useChatContext } from '../../hooks/useChatContext';
@@ -46,10 +47,12 @@ export function ChatPanel() {
   return (
     <section className={styles.panel}>
       {hasActiveChat ? (
-        <>
+        // key: для каждого чата шапка, переписка и поле ввода монтируются заново — прокрутка
+        // начинается с конца (п. 8.2), поле очищается и получает фокус (черновики не храним).
+        // Один key на всю группу: у соседних элементов ключи не должны повторяться
+        <Fragment key={activeChat.chatId}>
           <ChatHeader chat={activeChat} />
           <MessageList
-            chatId={activeChat.chatId}
             messages={messages[activeChat.chatId] ?? []}
             sendErrorKey={error}
             failedMessageId={failedMessageId}
@@ -59,9 +62,8 @@ export function ChatPanel() {
             historyErrorKey={historyError}
             onHistoryRetry={retryHistory}
           />
-          {/* key: при смене чата поле очищается и получает фокус (черновики не храним) */}
-          <MessageComposer key={activeChat.chatId} isSending={isSending} onSend={handleSend} />
-        </>
+          <MessageComposer isSending={isSending} onSend={handleSend} />
+        </Fragment>
       ) : (
         <div className={styles.empty}>
           <p className={styles.capsule}>{t('pages.chat.selectChat')}</p>

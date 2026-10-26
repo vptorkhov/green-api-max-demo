@@ -1,8 +1,10 @@
-import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { IconButton } from '@/components/ui/IconButton/IconButton';
+import { ArrowDownIcon } from '@/components/ui/icons/ArrowDownIcon';
 import type { ErrorMessageKey } from '@/utils/getErrorMessageKey';
 
+import { useAutoScroll } from '../../hooks/useAutoScroll';
 import type { Message } from '../../types/chat.types';
 import { HistoryStatus } from '../HistoryStatus/HistoryStatus';
 import { MessageBubble } from '../MessageBubble/MessageBubble';
@@ -10,7 +12,6 @@ import { MessageBubble } from '../MessageBubble/MessageBubble';
 import styles from './MessageList.module.css';
 
 type Props = {
-  chatId: string;
   messages: Message[];
   // Последняя ошибка отправки и сообщение этого чата, к которому она относится (п. 6.5)
   sendErrorKey: ErrorMessageKey | null;
@@ -23,9 +24,9 @@ type Props = {
   onHistoryRetry: () => void;
 };
 
-// Переписка открытого чата. «Умная» прокрутка (не уводить вниз, если читают историю) — этап 8
+// Переписка открытого чата. Прокрутка — useAutoScroll (п. 8.2): компонент монтируется заново
+// для каждого чата (key в ChatPanel). Пока пользователь читает историю — кнопка «вниз», как в MAX
 export function MessageList({
-  chatId,
   messages,
   sendErrorKey,
   failedMessageId,
@@ -37,39 +38,41 @@ export function MessageList({
 }: Props) {
   const { t } = useTranslation();
 
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const { scrollRef, isAtBottom, scrollToBottom } = useAutoScroll(messages);
   const hasMessages = messages.length > 0;
   // «Нет сообщений» — только когда история загружена: иначе пустой чат мелькнул бы до её прихода
   const isEmpty = !hasMessages && !isHistoryLoading && historyErrorKey === null;
 
-  // При открытии чата и новом сообщении — к последнему сообщению
-  useEffect(() => {
-    const scrollElement = scrollRef.current;
-
-    if (scrollElement) {
-      scrollElement.scrollTop = scrollElement.scrollHeight;
-    }
-  }, [chatId, messages.length]);
-
   return (
-    <div ref={scrollRef} className={styles.scroll}>
-      <div className={styles.column}>
-        <HistoryStatus
-          isLoading={isHistoryLoading}
-          errorKey={historyErrorKey}
-          onRetry={onHistoryRetry}
-        />
-        {messages.map((message) => (
-          <MessageBubble
-            key={message.id}
-            message={message}
-            errorKey={message.id === failedMessageId ? sendErrorKey : null}
-            isRetryDisabled={isRetryDisabled}
-            onRetry={onRetry}
+    <div className={styles.list}>
+      <div ref={scrollRef} className={styles.scroll}>
+        <div className={styles.column}>
+          <HistoryStatus
+            isLoading={isHistoryLoading}
+            errorKey={historyErrorKey}
+            onRetry={onHistoryRetry}
           />
-        ))}
-        {isEmpty && <p className={styles.empty}>{t('pages.chat.noMessages')}</p>}
+          {messages.map((message) => (
+            <MessageBubble
+              key={message.id}
+              message={message}
+              errorKey={message.id === failedMessageId ? sendErrorKey : null}
+              isRetryDisabled={isRetryDisabled}
+              onRetry={onRetry}
+            />
+          ))}
+          {isEmpty && <p className={styles.empty}>{t('pages.chat.noMessages')}</p>}
+        </div>
       </div>
+      {!isAtBottom && (
+        <IconButton
+          className={styles.scrollButton}
+          label={t('pages.chat.scrollToBottom')}
+          icon={<ArrowDownIcon />}
+          variant="floating"
+          onClick={scrollToBottom}
+        />
+      )}
     </div>
   );
 }

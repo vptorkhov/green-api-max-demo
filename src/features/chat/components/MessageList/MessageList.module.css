@@ -1,7 +1,23 @@
+/* Обёртка — точка отсчёта для кнопки «вниз», которая не прокручивается вместе с перепиской */
+.list {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+}
+
 .scroll {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+}
+
+/* Кнопка «вниз» в правом нижнем углу переписки — как .scrollButtonContainer в MAX */
+.scrollButton {
+  position: absolute;
+  right: var(--space-l);
+  bottom: var(--space-l);
 }
 
 /* Колонка переписки по центру, как в MAX; сообщения прижаты к низу */

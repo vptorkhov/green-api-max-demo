@@ -104,6 +104,7 @@
   /* Цвета: иконки */
   --color-icon-primary: #060708d6;
   --color-icon-secondary: #060708a3;
+  --color-icon-tertiary: #0607087a;
   --color-icon-themed: #007aff;
   --color-icon-inverse: #fff;
   --color-icon-disabled: #6f7276a3;
@@ -168,6 +169,7 @@
 
   --color-icon-primary: #fff;
   --color-icon-secondary: #ffffffad;
+  --color-icon-tertiary: #ffffff85;
   --color-icon-themed: #007aff;
   --color-icon-inverse: #fff;
   --color-icon-disabled: #ffffff3d;

@@ -45,6 +45,19 @@
   --button-bg-disabled: transparent;
 }
 
+/* Кнопка поверх контента (прокрутка вниз в переписке) — как .scrollButton в MAX:
+   фон панели, тонкая рамка, приглушённая иконка */
+.floating {
+  --button-color: var(--color-icon-tertiary);
+  --button-color-disabled: var(--color-icon-disabled);
+  --button-bg: var(--color-bg-primary);
+  --button-bg-hover: var(--color-bg-hover);
+  --button-bg-pressed: var(--color-bg-pressed);
+  --button-bg-disabled: var(--color-bg-primary);
+
+  border: var(--size-border) solid var(--color-divider);
+}
+
 .small {
   --icon-size: var(--size-icon-small);
 

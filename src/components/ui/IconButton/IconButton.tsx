@@ -4,7 +4,7 @@ import { joinClassNames } from '@/utils/joinClassNames';
 
 import styles from './IconButton.module.css';
 
-type IconButtonVariant = 'primary' | 'ghost';
+type IconButtonVariant = 'primary' | 'ghost' | 'floating';
 type IconButtonSize = 'small' | 'medium';
 
 type Props = Omit<ComponentProps<'button'>, 'children' | 'aria-label'> & {
