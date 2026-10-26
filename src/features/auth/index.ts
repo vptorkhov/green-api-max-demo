@@ -4,3 +4,6 @@
 export { AuthProvider } from './components/AuthProvider/AuthProvider';
 export { useAuthContext } from './hooks/useAuthContext';
 export { useUnauthorizedLogout } from './hooks/useUnauthorizedLogout';
+// Статус инстанса: уведомление stateInstanceChanged разбирает домен chat (п. 7.1)
+export type { InstanceState } from './types/auth.types';
+export { isInstanceState } from './utils/authGuards';
