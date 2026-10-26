@@ -20,3 +20,9 @@ export const RECEIVE_TIMEOUT_SECONDS = 20;
 // Запас к receiveTimeout для таймаута самого запроса: пустая очередь отвечает на 1–2 с позже
 // receiveTimeout (GreenApiNotes.md §6). Общий REQUEST_TIMEOUT_MS для long polling не подходит
 export const RECEIVE_REQUEST_TIMEOUT_MARGIN_MS = 10_000;
+
+// Повтор опроса после ошибки (сеть, сервер, лимит частоты, инстанс недоступен): пауза растёт
+// экспоненциально — 1, 2, 4 … 30 с — и сбрасывается после первого успешного запроса (п. 7.4)
+export const POLLING_RETRY_INITIAL_DELAY_MS = 1000;
+export const POLLING_RETRY_DELAY_MULTIPLIER = 2;
+export const POLLING_RETRY_MAX_DELAY_MS = 30_000;
