@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { IconButton } from '@/components/ui/IconButton/IconButton';
@@ -6,6 +7,8 @@ import type { ErrorMessageKey } from '@/utils/getErrorMessageKey';
 
 import { useAutoScroll } from '../../hooks/useAutoScroll';
 import type { Message } from '../../types/chat.types';
+import { isSameDay } from '../../utils/formatDate';
+import { DateSeparator } from '../DateSeparator/DateSeparator';
 import { HistoryStatus } from '../HistoryStatus/HistoryStatus';
 import { MessageBubble } from '../MessageBubble/MessageBubble';
 
@@ -52,15 +55,25 @@ export function MessageList({
             errorKey={historyErrorKey}
             onRetry={onHistoryRetry}
           />
-          {messages.map((message) => (
-            <MessageBubble
-              key={message.id}
-              message={message}
-              errorKey={message.id === failedMessageId ? sendErrorKey : null}
-              isRetryDisabled={isRetryDisabled}
-              onRetry={onRetry}
-            />
-          ))}
+          {messages.map((message, index) => {
+            const previousMessage = messages[index - 1];
+            // Сообщения уже в порядке времени (п. 5.3): разделитель перед первым сообщением дня
+            const isNewDay =
+              previousMessage === undefined ||
+              !isSameDay(previousMessage.timestamp, message.timestamp);
+
+            return (
+              <Fragment key={message.id}>
+                {isNewDay && <DateSeparator timestamp={message.timestamp} />}
+                <MessageBubble
+                  message={message}
+                  errorKey={message.id === failedMessageId ? sendErrorKey : null}
+                  isRetryDisabled={isRetryDisabled}
+                  onRetry={onRetry}
+                />
+              </Fragment>
+            );
+          })}
           {isEmpty && <p className={styles.empty}>{t('pages.chat.noMessages')}</p>}
         </div>
       </div>

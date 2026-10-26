@@ -105,7 +105,11 @@
         "loading": "Loading history…",
         "error": "Couldn't load the chat history."
       },
-      "scrollToBottom": "Scroll to latest messages"
+      "scrollToBottom": "Scroll to latest messages",
+      "dateSeparator": {
+        "today": "Today",
+        "yesterday": "Yesterday"
+      }
     }
   }
 }

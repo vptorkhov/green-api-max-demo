@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { joinClassNames } from '@/utils/joinClassNames';
 
 import type { Chat, Message } from '../../types/chat.types';
-import { formatChatListTime } from '../../utils/formatTime';
+import { formatChatListTime } from '../../utils/formatDate';
 import { getChatTitle } from '../../utils/getChatTitle';
 import { ChatAvatar } from '../ChatAvatar/ChatAvatar';
 

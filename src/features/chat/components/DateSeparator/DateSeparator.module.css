@@ -1,0 +1,16 @@
+/* Строка с капсулой по центру — как .capsuleSeparator в MAX */
+.separator {
+  display: flex;
+  justify-content: center;
+  margin: var(--space-s) 0;
+}
+
+/* Капсула на фоне чата — как «Нет сообщений» и капсула истории */
+.capsule {
+  padding: var(--space-3xs) var(--space-s-half);
+  border-radius: var(--radius-m-half);
+  font-size: var(--font-size-description);
+  line-height: var(--line-height-description);
+  color: var(--color-text-inverse);
+  background: var(--color-capsule-bg);
+}

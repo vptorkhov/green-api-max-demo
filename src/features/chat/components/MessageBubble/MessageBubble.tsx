@@ -7,7 +7,7 @@ import type { ErrorMessageKey } from '@/utils/getErrorMessageKey';
 import { joinClassNames } from '@/utils/joinClassNames';
 
 import type { Message, MessageStatus } from '../../types/chat.types';
-import { formatMessageTime } from '../../utils/formatTime';
+import { formatMessageTime } from '../../utils/formatDate';
 
 import styles from './MessageBubble.module.css';
 
