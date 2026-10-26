@@ -5,11 +5,13 @@ import type { GreenApiCredentials } from '@/types/greenApi.types';
 import type {
   CheckAccountRequest,
   CheckAccountResponse,
+  GetChatHistoryRequest,
   GetSettingsResponse,
   SendMessageRequest,
 } from '../types/greenApiChat.types';
 import type { ReceiveNotificationResponse } from '../types/notification.types';
 import {
+  isChatHistoryResponse,
   isCheckAccountResponse,
   isDeleteNotificationResponse,
   isGetSettingsResponse,
@@ -74,6 +76,19 @@ export const chatService = {
     await greenApiClient.delete(credentials, 'deleteNotification', {
       guard: isDeleteNotificationResponse,
       pathParam: receiptId,
+      signal,
+    });
+  },
+
+  // Последние сообщения чата, новые первыми (п. 7.10). Без месячного лимита, частота — 1 запрос
+  // в секунду (интервал выдерживает useChatHistory). Элементы сужает mapChatHistory
+  getChatHistory(
+    credentials: GreenApiCredentials,
+    request: GetChatHistoryRequest,
+    signal?: AbortSignal,
+  ): Promise<unknown[]> {
+    return greenApiClient.post(credentials, 'getChatHistory', request, {
+      guard: isChatHistoryResponse,
       signal,
     });
   },

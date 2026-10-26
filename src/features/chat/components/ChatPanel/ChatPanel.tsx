@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
 import { useChatContext } from '../../hooks/useChatContext';
+import { useChatHistory } from '../../hooks/useChatHistory';
 import { useSendMessage } from '../../hooks/useSendMessage';
 import { ChatHeader } from '../ChatHeader/ChatHeader';
 import { MessageComposer } from '../MessageComposer/MessageComposer';
@@ -8,11 +9,17 @@ import { MessageList } from '../MessageList/MessageList';
 
 import styles from './ChatPanel.module.css';
 
-// Правая колонка: открытый чат (шапка, переписка, поле ввода) или подсказка.
+// Правая колонка: открытый чат (шапка, переписка, поле ввода) или подсказка. История открытого
+// чата догружается с сервера (п. 7.10).
 // Хук отправки — здесь, а не в поле ввода: повтор (п. 6.5) вызывается из пузырей переписки
 export function ChatPanel() {
   const { chats, messages, activeChatId } = useChatContext();
   const { isSending, error, failedMessage, sendMessage, retryMessage } = useSendMessage();
+  const {
+    isLoading: isHistoryLoading,
+    error: historyError,
+    retryHistory,
+  } = useChatHistory(activeChatId);
   const { t } = useTranslation();
 
   const activeChat = activeChatId === null ? undefined : chats[activeChatId];
@@ -48,6 +55,9 @@ export function ChatPanel() {
             failedMessageId={failedMessageId}
             isRetryDisabled={isSending}
             onRetry={handleRetry}
+            isHistoryLoading={isHistoryLoading}
+            historyErrorKey={historyError}
+            onHistoryRetry={retryHistory}
           />
           {/* key: при смене чата поле очищается и получает фокус (черновики не храним) */}
           <MessageComposer key={activeChat.chatId} isSending={isSending} onSend={handleSend} />

@@ -29,6 +29,26 @@ export type DeleteNotificationResponse = {
   result: boolean;
 };
 
+// Запрос getChatHistory: последние count сообщений чата (api-docs/journals/GetChatHistory.md)
+export type GetChatHistoryRequest = {
+  chatId: string;
+  count: number;
+};
+
+// Элемент ответа getChatHistory — только используемые поля (GreenApiNotes.md §15).
+// Ответ — массив, новые сообщения первыми; текст — в textMessage у textMessage и extendedTextMessage
+export type ChatHistoryItem = {
+  type: 'incoming' | 'outgoing';
+  idMessage: string;
+  // Секунды Unix-времени, как у уведомлений
+  timestamp: number;
+  typeMessage: string;
+  chatId: string;
+  chatType: string;
+  textMessage?: string;
+  isDeleted?: boolean;
+};
+
 // Настройки инстанса, без которых приложение не получает нужные уведомления (GreenApiNotes.md §11).
 // В новом инстансе все выключены
 export type NotificationSettingKey =

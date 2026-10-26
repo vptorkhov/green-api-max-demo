@@ -2,6 +2,7 @@ import { isBoolean, isNumber, isRecord, isString } from '@/utils/typeGuards';
 
 import type { Chat, Message, MessageStatus, StoredChats } from '../types/chat.types';
 import type {
+  ChatHistoryItem,
   CheckAccountResponse,
   DeleteNotificationResponse,
   GetSettingsResponse,
@@ -94,4 +95,25 @@ export function isDeleteNotificationResponse(value: unknown): value is DeleteNot
 // Ответ getSettings: проверяются только флаги уведомлений, остальные поля не используются
 export function isGetSettingsResponse(value: unknown): value is GetSettingsResponse {
   return isRecord(value) && NOTIFICATION_SETTING_KEYS.every((key) => isString(value[key]));
+}
+
+// Ответ getChatHistory — массив. Элементы проверяются по одному (isChatHistoryItem): битый элемент
+// пропускается при маппинге, а не роняет загрузку всей истории
+export function isChatHistoryResponse(value: unknown): value is unknown[] {
+  return Array.isArray(value);
+}
+
+export function isChatHistoryItem(value: unknown): value is ChatHistoryItem {
+  return (
+    isRecord(value) &&
+    (value.type === 'incoming' || value.type === 'outgoing') &&
+    isString(value.idMessage) &&
+    value.idMessage !== '' &&
+    isNumber(value.timestamp) &&
+    isString(value.typeMessage) &&
+    isString(value.chatId) &&
+    isString(value.chatType) &&
+    isOptionalString(value.textMessage) &&
+    (value.isDeleted === undefined || isBoolean(value.isDeleted))
+  );
 }

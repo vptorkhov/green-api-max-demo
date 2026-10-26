@@ -10,6 +10,7 @@ import { useAuthContext, useUnauthorizedLogout } from '@/features/auth';
 import { isAbortError } from '@/services/greenApiError';
 import type { GreenApiCredentials } from '@/types/greenApi.types';
 import { type ErrorMessageKey, getErrorMessageKey } from '@/utils/getErrorMessageKey';
+import { wait } from '@/utils/wait';
 
 import { chatService } from '../services/chatService';
 import type { NotificationEvent } from '../types/notification.types';
@@ -20,22 +21,6 @@ type Options = {
   // кроме instanceStateChanged — после удаления
   onEvent: (event: NotificationEvent) => void;
 };
-
-// Пауза, которую прерывает отмена: выход или размонтирование не ждут конца задержки
-function wait(delayMs: number, signal: AbortSignal) {
-  return new Promise<void>((resolve) => {
-    const timeoutId = setTimeout(resolve, delayMs);
-
-    signal.addEventListener(
-      'abort',
-      () => {
-        clearTimeout(timeoutId);
-        resolve();
-      },
-      { once: true },
-    );
-  });
-}
 
 function getNextRetryDelay(delayMs: number) {
   return Math.min(delayMs * POLLING_RETRY_DELAY_MULTIPLIER, POLLING_RETRY_MAX_DELAY_MS);

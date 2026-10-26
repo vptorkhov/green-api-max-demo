@@ -55,6 +55,10 @@ export function ChatProvider({ children }: Props) {
     dispatch({ type: 'messageConfirmed', chatId, temporaryId, idMessage });
   }, []);
 
+  const addHistoryMessages = useCallback((historyMessages: Message[]) => {
+    dispatch({ type: 'historyLoaded', messages: historyMessages });
+  }, []);
+
   const markChatRead = useCallback((chatId: string) => {
     dispatch({ type: 'chatRead', chatId });
   }, []);
@@ -116,6 +120,7 @@ export function ChatProvider({ children }: Props) {
       addMessage,
       changeMessageStatus,
       confirmMessage,
+      addHistoryMessages,
       markChatRead,
     }),
     [
@@ -130,6 +135,7 @@ export function ChatProvider({ children }: Props) {
       addMessage,
       changeMessageStatus,
       confirmMessage,
+      addHistoryMessages,
       markChatRead,
     ],
   );

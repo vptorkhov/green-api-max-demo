@@ -95,6 +95,10 @@
           "outgoingWebhook": "outgoing message statuses",
           "stateWebhook": "instance status changes"
         }
+      },
+      "history": {
+        "loading": "Loading history…",
+        "error": "Couldn't load the chat history."
       }
     }
   }

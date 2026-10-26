@@ -21,6 +21,14 @@ export const RECEIVE_TIMEOUT_SECONDS = 20;
 // receiveTimeout (GreenApiNotes.md §6). Общий REQUEST_TIMEOUT_MS для long polling не подходит
 export const RECEIVE_REQUEST_TIMEOUT_MARGIN_MS = 10_000;
 
+// История открытого чата (п. 7.10): сколько последних сообщений запрашивать у getChatHistory.
+// Больше — дольше ответ; в localStorage всё равно хранятся последние 200 сообщений чата
+export const CHAT_HISTORY_COUNT = 100;
+
+// getChatHistory — не больше 1 запроса в секунду на инстанс (api-docs/general/ratelimiter.md).
+// Интервал с запасом: быстрое переключение чатов и StrictMode иначе получили бы 429
+export const CHAT_HISTORY_REQUEST_INTERVAL_MS = 1100;
+
 // Окно сопоставления «осиротевшей» копии failed с уведомлением об исходящем (п. 7.5): время копии —
 // часы клиента, время уведомления — сервера, и они расходятся. Шире — выше риск убрать копию
 // другого сообщения с тем же текстом

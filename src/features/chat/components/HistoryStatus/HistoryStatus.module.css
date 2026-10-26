@@ -1,0 +1,48 @@
+/* Капсула на фоне чата — как разделитель дат в MAX и причина ошибки у пузыря */
+.capsule {
+  /* Не шире пузыря сообщения (MessageBubble, --bubble-max-width) */
+  --capsule-max-width: 75%;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs) var(--space-s);
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  max-width: var(--capsule-max-width);
+  margin-bottom: var(--space-s);
+  padding: var(--space-3xs) var(--space-s-half);
+  border-radius: var(--radius-m-half);
+  font-size: var(--font-size-description);
+  line-height: var(--line-height-description);
+  text-align: center;
+  color: var(--color-text-inverse);
+  background: var(--color-capsule-bg);
+}
+
+/* Спиннер по высоте строки, цветом текста капсулы */
+.spinner {
+  --spinner-size: var(--line-height-description);
+  --spinner-color: currentcolor;
+}
+
+.text {
+  overflow-wrap: anywhere;
+}
+
+/* Причина — отдельной строкой */
+.reason {
+  display: block;
+}
+
+/* Кнопка-ссылка внутри капсулы */
+.retry {
+  padding: 0;
+  border: none;
+  font: inherit;
+  font-weight: var(--font-weight-semibold);
+  text-decoration: underline;
+  color: inherit;
+  background: none;
+  cursor: pointer;
+}

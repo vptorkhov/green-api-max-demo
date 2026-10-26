@@ -63,13 +63,15 @@ function addMessageToChat(
   message: Message,
   chatMessages: Message[],
   details: Pick<NewChat, 'phone' | 'name'> = {},
+  isUnreadCounted = true,
 ): ChatsState {
   const existingChat = state.chats[message.chatId];
   const chat = withChatDetails(existingChat ?? createEmptyChat(message.chatId, message.timestamp), {
     phone: existingChat?.phone ?? details.phone,
     name: existingChat?.name ?? details.name,
   });
-  const isUnread = message.direction === 'incoming' && state.activeChatId !== message.chatId;
+  const isUnread =
+    isUnreadCounted && message.direction === 'incoming' && state.activeChatId !== message.chatId;
 
   return {
     ...state,
@@ -130,6 +132,34 @@ function adoptServerTimestamp(
   };
 }
 
+// Сообщение с сервера — из уведомления или истории чата. Уже есть с тем же id — меняется только
+// время (adoptServerTimestamp): своё сообщение после ответа sendMessage уже sent, а failed
+// из outgoingMessageStatus новее. Исходящее убирает свою «осиротевшую» копию failed
+function addServerMessage(
+  state: ChatsState,
+  message: Message,
+  details: Pick<NewChat, 'phone' | 'name'>,
+  isUnreadCounted: boolean,
+): ChatsState {
+  const chatMessages = state.messages[message.chatId] ?? [];
+  const existingMessage = chatMessages.find(({ id }) => id === message.id);
+
+  if (existingMessage !== undefined) {
+    return adoptServerTimestamp(state, existingMessage, message.timestamp);
+  }
+
+  const orphanMessage =
+    message.direction === 'outgoing' ? findOrphanMessage(chatMessages, message) : undefined;
+
+  return addMessageToChat(
+    state,
+    message,
+    chatMessages.filter((item) => item !== orphanMessage),
+    details,
+    isUnreadCounted,
+  );
+}
+
 // Чистый reducer. Если действие ничего не меняет, возвращается то же состояние —
 // без новой ссылки потребители контекста не перерисовываются
 export function chatsReducer(state: ChatsState, action: ChatsAction): ChatsState {
@@ -182,27 +212,19 @@ export function chatsReducer(state: ChatsState, action: ChatsAction): ChatsState
       return addMessageToChat(state, message, chatMessages);
     }
 
-    // Сообщение из уведомления (п. 7.5). Уже есть с тем же id — меняется только время (см.
-    // adoptServerTimestamp): своё сообщение после ответа sendMessage уже sent, а failed
-    // из outgoingMessageStatus новее уведомления. Исходящее убирает свою «осиротевшую» копию failed;
-    // чата нет — создаётся с phone / name
+    // Сообщение из уведомления (п. 7.5). Чата нет — создаётся с phone / name
     case 'notificationMessageAdded': {
       const { message, chat } = action;
-      const chatMessages = state.messages[message.chatId] ?? [];
-      const existingMessage = chatMessages.find(({ id }) => id === message.id);
 
-      if (existingMessage !== undefined) {
-        return adoptServerTimestamp(state, existingMessage, message.timestamp);
-      }
+      return addServerMessage(state, message, chat, true);
+    }
 
-      const orphanMessage =
-        message.direction === 'outgoing' ? findOrphanMessage(chatMessages, message) : undefined;
-
-      return addMessageToChat(
+    // История открытого чата (п. 7.10): по тем же правилам, но непрочитанные не растут — чат открыт,
+    // а сообщения старые. Ничего нового — то же состояние, без лишней перерисовки
+    case 'historyLoaded': {
+      return action.messages.reduce(
+        (currentState, message) => addServerMessage(currentState, message, {}, false),
         state,
-        message,
-        chatMessages.filter((item) => item !== orphanMessage),
-        chat,
       );
     }
 

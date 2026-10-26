@@ -81,6 +81,8 @@ export type ChatsAction =
   | { type: 'messageAdded'; message: Message }
   // Сообщение из уведомления: создаёт чат с данными собеседника, убирает копию failed (п. 7.5)
   | { type: 'notificationMessageAdded'; message: Message; chat: NewChat }
+  // История открытого чата с сервера (п. 7.10)
+  | { type: 'historyLoaded'; messages: Message[] }
   | { type: 'messageStatusChanged'; chatId: string; messageId: string; status: MessageStatus }
   // Ответ sendMessage: временный id → idMessage, статус sent (п. 6.2)
   | { type: 'messageConfirmed'; chatId: string; temporaryId: string; idMessage: string }
@@ -99,5 +101,7 @@ export type ChatContextValue = Pick<ChatsState, 'chats' | 'messages' | 'activeCh
   // failed — ошибка отправки; sending — повтор (п. 6.3)
   changeMessageStatus: (chatId: string, messageId: string, status: MessageStatus) => void;
   confirmMessage: (chatId: string, temporaryId: string, idMessage: string) => void;
+  // Сообщения из getChatHistory: дубли — только время сервера, непрочитанные не растут (п. 7.10)
+  addHistoryMessages: (messages: Message[]) => void;
   markChatRead: (chatId: string) => void;
 };
