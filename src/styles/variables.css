@@ -46,12 +46,10 @@
   --space-m-half: 10px;
   --space-m: 12px;
   --space-l: 16px;
-  --space-xl-half: 20px;
   --space-xl: 24px;
   --space-2xl: 32px;
 
   /* Радиусы */
-  --radius-xs: 4px;
   --radius-s-half: 6px;
   --radius-s: 8px;
   --radius-m-half: 10px;
@@ -61,7 +59,6 @@
   --radius-round: 50%;
   --radius-pill: 999px;
   --radius-bubble: var(--radius-l);
-  --radius-bubble-stack: var(--radius-s-half);
 
   /* Тени */
   --shadow-dropdown: 0 16px 16px #00000029, 0 0 8px #0000001f;
@@ -90,16 +87,13 @@
 
   /* Анимация */
   --duration-fast: 0.15s;
-  --duration-normal: 0.2s;
 
   /* Цвета: поверхности */
   --color-bg-primary: #fff;
-  --color-bg-secondary: #f5f7fa;
   --color-bg-input: #09090914;
   --color-bg-hover: #f6f6f6;
   --color-bg-pressed: #fafafa;
   --color-bg-selected: #007aff14;
-  --color-bg-overlay: #0c0d0e52;
 
   /* Цвета: текст */
   --color-text-primary: #060708;
@@ -127,9 +121,6 @@
 
   /* Цвета: кнопки */
   --color-accent: #007aff;
-  --color-accent-hover: #479fff;
-  --color-accent-pressed: #006ee5;
-  --color-accent-disabled: #007aff7a;
   /* Основная кнопка. MAX: #007aff / hover #479fff / pressed #006ee5 — белый текст 4,0:1 и 2,7:1;
      потемнее до 4,5:1 (WCAG AA, п. 8.8). Hover, как в MAX, светлее, pressed — темнее.
      Аватар и счётчик непрочитанных остаются цвета --color-accent */
@@ -172,12 +163,10 @@
 
 :root[data-theme='dark'] {
   --color-bg-primary: #17181c;
-  --color-bg-secondary: #25262d;
   --color-bg-input: #ffffff17;
   --color-bg-hover: #32343d;
   --color-bg-pressed: #1f2026;
   --color-bg-selected: #2c2d37;
-  --color-bg-overlay: #0d0d0da3;
 
   --color-text-primary: #fff;
   --color-text-secondary: #fffc;
@@ -200,9 +189,6 @@
   --color-scrollbar-thumb: #ffffff3d;
 
   --color-accent: #007aff;
-  --color-accent-hover: #479fff;
-  --color-accent-pressed: #006ee5;
-  --color-accent-disabled: #ffffff1f;
   --color-button-primary: #006be1;
   --color-button-primary-hover: #0072ed;
   --color-button-primary-pressed: #0062cf;

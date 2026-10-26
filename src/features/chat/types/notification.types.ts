@@ -16,12 +16,10 @@ export type ReceiveNotificationResponse = {
 export type MessageTypeWebhook =
   'incomingMessageReceived' | 'outgoingMessageReceived' | 'outgoingAPIMessageReceived';
 
-// user — личный чат; group / channel / bot приложение не показывает (п. 7.3)
-export type ChatType = 'user' | 'group' | 'channel' | 'bot';
-
 // Для исходящих — данные чата получателя. Привязка к чату — только по chatId (§7)
 export type SenderData = {
   chatId: string;
+  // user — личный чат; group / channel / bot приложение не показывает (п. 7.3).
   // Неизвестные значения не отбрасывают уведомление: такой чат отфильтрует маппинг
   chatType: string;
   // Имя для нового чата. Необязательные поля не делают уведомление «битым», если их не будет
@@ -71,13 +69,6 @@ export type StateInstanceChangedNotification = {
 export type QuotaExceededNotification = {
   typeWebhook: 'quotaExceeded';
 };
-
-// Уведомления, которые обрабатывает приложение; остальные typeWebhook игнорируются (п. 7.3)
-export type NotificationBody =
-  | MessageNotification
-  | OutgoingMessageStatusNotification
-  | StateInstanceChangedNotification
-  | QuotaExceededNotification;
 
 // Почему уведомление не меняет хранилище. Технические значения: в интерфейс не попадают
 export type IgnoreReason =

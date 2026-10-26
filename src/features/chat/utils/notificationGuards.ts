@@ -4,7 +4,6 @@ import { isNumber, isRecord, isString } from '@/utils/typeGuards';
 import type {
   MessageNotification,
   MessageTypeWebhook,
-  NotificationBody,
   OutgoingMessageStatus,
   OutgoingMessageStatusNotification,
   QuotaExceededNotification,
@@ -117,13 +116,4 @@ export function isStateInstanceChangedNotification(
 
 export function isQuotaExceededNotification(value: unknown): value is QuotaExceededNotification {
   return isRecord(value) && value.typeWebhook === 'quotaExceeded';
-}
-
-export function isNotificationBody(value: unknown): value is NotificationBody {
-  return (
-    isMessageNotification(value) ||
-    isOutgoingMessageStatusNotification(value) ||
-    isStateInstanceChangedNotification(value) ||
-    isQuotaExceededNotification(value)
-  );
 }

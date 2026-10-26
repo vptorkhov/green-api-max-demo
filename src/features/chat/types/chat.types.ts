@@ -4,8 +4,6 @@ import type { ErrorMessageKey } from '@/utils/getErrorMessageKey';
 // Доменные типы чата. От формы Message зависят список сообщений, хранилище (п. 5.3),
 // отправка (этап 6) и получение (этап 7)
 
-export type MessageDirection = 'incoming' | 'outgoing';
-
 // Статус есть только у исходящих: sending — запрос SendMessage в пути, sent — сервер принял,
 // failed — ошибка запроса или outgoingMessageStatus failed / noAccount (этап 7)
 export type MessageStatus = 'sending' | 'sent' | 'failed';

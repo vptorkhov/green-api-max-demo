@@ -16,7 +16,9 @@ export function useUnauthorizedLogout() {
     (error: unknown) => {
       const isUnauthorized = error instanceof GreenApiError && error.kind === 'unauthorized';
 
+      // Ошибка логируется здесь, а не в хуках: они при выходе сразу возвращаются (ProjectRules §12)
       if (isUnauthorized) {
+        console.error(error);
         logout('pages.auth.logoutReason.unauthorized');
       }
 

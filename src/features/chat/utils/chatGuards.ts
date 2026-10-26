@@ -25,7 +25,7 @@ function isMessageStatus(value: unknown): value is MessageStatus {
   return isString(value) && Object.hasOwn(KNOWN_MESSAGE_STATUSES, value);
 }
 
-export function isChat(value: unknown): value is Chat {
+function isChat(value: unknown): value is Chat {
   return (
     isRecord(value) &&
     isString(value.chatId) &&
@@ -36,7 +36,7 @@ export function isChat(value: unknown): value is Chat {
   );
 }
 
-export function isMessage(value: unknown): value is Message {
+function isMessage(value: unknown): value is Message {
   if (
     !isRecord(value) ||
     !isString(value.id) ||
