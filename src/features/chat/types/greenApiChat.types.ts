@@ -23,3 +23,8 @@ export type SendMessageRequest = {
 export type SendMessageResponse = {
   idMessage: string;
 };
+
+// {"result":true,"reason":""}; result: false — уже удалено или receiptId неизвестен (GreenApiNotes.md §6)
+export type DeleteNotificationResponse = {
+  result: boolean;
+};

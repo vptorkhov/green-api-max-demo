@@ -1,3 +1,4 @@
+import { RECEIVE_REQUEST_TIMEOUT_MARGIN_MS } from '@/constants/greenApi';
 import { greenApiClient } from '@/services/greenApiClient';
 import type { GreenApiCredentials } from '@/types/greenApi.types';
 
@@ -6,7 +7,13 @@ import type {
   CheckAccountResponse,
   SendMessageRequest,
 } from '../types/greenApiChat.types';
-import { isCheckAccountResponse, isSendMessageResponse } from '../utils/chatGuards';
+import type { ReceiveNotificationResponse } from '../types/notification.types';
+import {
+  isCheckAccountResponse,
+  isDeleteNotificationResponse,
+  isSendMessageResponse,
+} from '../utils/chatGuards';
+import { isReceiveNotificationResponse } from '../utils/notificationGuards';
 
 export const chatService = {
   // Номер → chatId (GreenApiNotes.md §4). Лимит тарифа Developer — 100 вызовов в месяц,
@@ -37,5 +44,35 @@ export const chatService = {
     });
 
     return response.idMessage;
+  },
+
+  // Следующее уведомление из очереди (long polling) или null — очередь пуста; пустое тело ответа
+  // клиент тоже возвращает как null (GreenApiNotes.md §6). Уведомление остаётся в очереди,
+  // пока его не удалят deleteNotification. Тело уведомления сужает маппинг (п. 7.3)
+  receiveNotification(
+    credentials: GreenApiCredentials,
+    receiveTimeoutSeconds: number,
+    signal?: AbortSignal,
+  ): Promise<ReceiveNotificationResponse> {
+    return greenApiClient.get(credentials, 'receiveNotification', {
+      guard: isReceiveNotificationResponse,
+      query: { receiveTimeout: receiveTimeoutSeconds },
+      signal,
+      timeoutMs: receiveTimeoutSeconds * 1000 + RECEIVE_REQUEST_TIMEOUT_MARGIN_MS,
+    });
+  },
+
+  // Удаление уведомления из очереди. result: false (уже удалено или receiptId неизвестен) —
+  // не ошибка: уведомления в очереди нет, цель достигнута (GreenApiNotes.md §6)
+  async deleteNotification(
+    credentials: GreenApiCredentials,
+    receiptId: number,
+    signal?: AbortSignal,
+  ): Promise<void> {
+    await greenApiClient.delete(credentials, 'deleteNotification', {
+      guard: isDeleteNotificationResponse,
+      pathParam: receiptId,
+      signal,
+    });
   },
 };

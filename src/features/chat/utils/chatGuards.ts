@@ -1,7 +1,11 @@
 import { isBoolean, isNumber, isRecord, isString } from '@/utils/typeGuards';
 
 import type { Chat, Message, MessageStatus, StoredChats } from '../types/chat.types';
-import type { CheckAccountResponse, SendMessageResponse } from '../types/greenApiChat.types';
+import type {
+  CheckAccountResponse,
+  DeleteNotificationResponse,
+  SendMessageResponse,
+} from '../types/greenApiChat.types';
 
 // Record по всем значениям MessageStatus: забытый статус — ошибка TypeScript
 const KNOWN_MESSAGE_STATUSES: Record<MessageStatus, true> = {
@@ -79,4 +83,8 @@ export function isCheckAccountResponse(value: unknown): value is CheckAccountRes
 // Ответ sendMessage. Пустой idMessage — неожиданный ответ: им подменяется временный id сообщения (п. 6.2)
 export function isSendMessageResponse(value: unknown): value is SendMessageResponse {
   return isRecord(value) && isString(value.idMessage) && value.idMessage !== '';
+}
+
+export function isDeleteNotificationResponse(value: unknown): value is DeleteNotificationResponse {
+  return isRecord(value) && isBoolean(value.result);
 }

@@ -12,3 +12,11 @@ export const GREEN_API_CONSOLE_URL = 'https://console.green-api.com';
 
 // Максимальная длина текста sendMessage: длиннее — 400 Validation failed (GreenApiNotes.md §5)
 export const MAX_MESSAGE_LENGTH = 4000;
+
+// Long polling receiveNotification: сервер держит запрос до receiveTimeout секунд (допустимо 5–60),
+// если уведомлений нет. Больше значение — реже пустые запросы; уведомление приходит сразу при появлении
+export const RECEIVE_TIMEOUT_SECONDS = 20;
+
+// Запас к receiveTimeout для таймаута самого запроса: пустая очередь отвечает на 1–2 с позже
+// receiveTimeout (GreenApiNotes.md §6). Общий REQUEST_TIMEOUT_MS для long polling не подходит
+export const RECEIVE_REQUEST_TIMEOUT_MARGIN_MS = 10_000;
