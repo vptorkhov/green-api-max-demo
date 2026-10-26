@@ -100,6 +100,36 @@ function findOrphanMessage(chatMessages: Message[], sentMessage: OutgoingMessage
   );
 }
 
+// Время сервера — источник правды (решение разработчика в 7.9). У своего сообщения до уведомления
+// время клиента: если часы компьютера спешат, ответ собеседника встал бы выше вопроса. Сообщение
+// переставляется на место по времени сервера; если время чата задано этим сообщением — оно тоже
+function adoptServerTimestamp(
+  state: ChatsState,
+  message: Message,
+  serverTimestamp: number,
+): ChatsState {
+  const chat = state.chats[message.chatId];
+
+  if (message.timestamp === serverTimestamp || chat === undefined) {
+    return state;
+  }
+
+  const chatMessages = insertByTimestamp(
+    (state.messages[message.chatId] ?? []).filter((item) => item !== message),
+    { ...message, timestamp: serverTimestamp },
+  );
+  const isChatTimeFromMessage = chat.updatedAt === message.timestamp;
+  const lastTimestamp = chatMessages.at(-1)?.timestamp ?? serverTimestamp;
+
+  return {
+    ...state,
+    chats: isChatTimeFromMessage
+      ? { ...state.chats, [chat.chatId]: { ...chat, updatedAt: lastTimestamp } }
+      : state.chats,
+    messages: { ...state.messages, [chat.chatId]: chatMessages },
+  };
+}
+
 // Чистый reducer. Если действие ничего не меняет, возвращается то же состояние —
 // без новой ссылки потребители контекста не перерисовываются
 export function chatsReducer(state: ChatsState, action: ChatsAction): ChatsState {
@@ -152,15 +182,17 @@ export function chatsReducer(state: ChatsState, action: ChatsAction): ChatsState
       return addMessageToChat(state, message, chatMessages);
     }
 
-    // Сообщение из уведомления (п. 7.5). Уже есть с тем же id — без изменений: своё сообщение
-    // после ответа sendMessage уже sent, а failed из outgoingMessageStatus новее уведомления.
-    // Исходящее убирает свою «осиротевшую» копию failed; чата нет — создаётся с phone / name
+    // Сообщение из уведомления (п. 7.5). Уже есть с тем же id — меняется только время (см.
+    // adoptServerTimestamp): своё сообщение после ответа sendMessage уже sent, а failed
+    // из outgoingMessageStatus новее уведомления. Исходящее убирает свою «осиротевшую» копию failed;
+    // чата нет — создаётся с phone / name
     case 'notificationMessageAdded': {
       const { message, chat } = action;
       const chatMessages = state.messages[message.chatId] ?? [];
+      const existingMessage = chatMessages.find(({ id }) => id === message.id);
 
-      if (chatMessages.some(({ id }) => id === message.id)) {
-        return state;
+      if (existingMessage !== undefined) {
+        return adoptServerTimestamp(state, existingMessage, message.timestamp);
       }
 
       const orphanMessage =
