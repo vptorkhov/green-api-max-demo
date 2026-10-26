@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { ErrorMessage } from '@/components/ui/ErrorMessage/ErrorMessage';
@@ -6,6 +6,7 @@ import { IconButton } from '@/components/ui/IconButton/IconButton';
 import { LogoutIcon } from '@/components/ui/icons/LogoutIcon';
 import { PlusIcon } from '@/components/ui/icons/PlusIcon';
 import { useAuthContext } from '@/features/auth';
+import { useReturnFocusOnClose } from '@/hooks/useReturnFocusOnClose';
 import { joinClassNames } from '@/utils/joinClassNames';
 
 import { useChatContext } from '../../hooks/useChatContext';
@@ -28,10 +29,16 @@ export function ChatSidebar() {
   const { disabledSettings } = useNotificationSettingsCheck();
   const { t } = useTranslation();
 
+  const newChatButtonRef = useRef<HTMLButtonElement>(null);
   const [isNewChatOpen, setIsNewChatOpen] = useState(false);
   // Ошибка опроса сбрасывается первым успешным запросом — пока она есть, идёт переподключение
   const isReconnecting = connectionError !== null;
   const hasActiveChat = activeChatId !== null;
+
+  // «Назад» и Escape в панели «Найти по номеру» возвращают фокус на «+». После создания чата
+  // фокус уже в поле ввода открытого чата — хук его не трогает
+  const getNewChatButton = useCallback(() => newChatButtonRef.current, []);
+  useReturnFocusOnClose(isNewChatOpen, getNewChatButton);
 
   function handleLogoutClick() {
     logout();
@@ -60,6 +67,7 @@ export function ChatSidebar() {
             </div>
             <SettingsMenu />
             <IconButton
+              ref={newChatButtonRef}
               label={t('pages.chat.newChat')}
               icon={<PlusIcon />}
               variant="primary"

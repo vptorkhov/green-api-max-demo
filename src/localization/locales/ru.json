@@ -122,6 +122,7 @@
         "loading": "Загружаем историю…",
         "error": "Не удалось загрузить историю чата."
       },
+      "messageListLabel": "Сообщения",
       "scrollToBottom": "К последним сообщениям",
       "dateSeparator": {
         "today": "Сегодня",

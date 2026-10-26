@@ -1,0 +1,15 @@
+/* Общепринятый приём «visually hidden»: элемент в 1px, обрезанный до нуля. display: none и
+   visibility: hidden не подходят — они убирают текст и из дерева доступности */
+.visuallyHidden {
+  --visually-hidden-size: 1px;
+
+  position: absolute;
+  width: var(--visually-hidden-size);
+  height: var(--visually-hidden-size);
+  margin: calc(-1 * var(--visually-hidden-size));
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}

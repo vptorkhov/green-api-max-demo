@@ -13,6 +13,11 @@
   overflow-y: auto;
 }
 
+/* Обводка фокуса внутри области: снаружи она залезла бы на шапку и поле ввода */
+.scroll:focus-visible {
+  outline-offset: calc(-1 * var(--size-focus-ring));
+}
+
 /* Кнопка «вниз» в правом нижнем углу переписки — как .scrollButtonContainer в MAX */
 .scrollButton {
   position: absolute;

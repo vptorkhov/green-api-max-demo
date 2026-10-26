@@ -122,6 +122,7 @@
         "loading": "Loading history…",
         "error": "Couldn't load the chat history."
       },
+      "messageListLabel": "Messages",
       "scrollToBottom": "Scroll to latest messages",
       "dateSeparator": {
         "today": "Today",

@@ -41,6 +41,13 @@
   background: transparent;
 }
 
+/* У самого поля обводки нет — её получает вся панель: для пользователя панель и есть поле (п. 8.7).
+   Как у полей формы входа, видна и при наборе: :focus-visible у текстовых полей срабатывает всегда */
+.composer:has(.textarea:focus-visible) {
+  outline: var(--size-focus-ring) solid var(--color-focus);
+  outline-offset: var(--size-focus-ring);
+}
+
 .textarea::placeholder {
   color: var(--color-text-tertiary);
 }

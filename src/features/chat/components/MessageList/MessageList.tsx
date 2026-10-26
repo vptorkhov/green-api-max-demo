@@ -48,7 +48,15 @@ export function MessageList({
 
   return (
     <div className={styles.list}>
-      <div ref={scrollRef} className={styles.scroll}>
+      {/* role="log": скринридер озвучивает новые сообщения, не перебивая пользователя.
+          tabIndex — переписку можно прокручивать с клавиатуры, даже если в ней нет кнопок */}
+      <div
+        ref={scrollRef}
+        className={styles.scroll}
+        role="log"
+        aria-label={t('pages.chat.messageListLabel')}
+        tabIndex={0}
+      >
         <div className={styles.column}>
           <HistoryStatus
             isLoading={isHistoryLoading}
