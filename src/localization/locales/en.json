@@ -81,6 +81,9 @@
         "sending": "Sending",
         "sent": "Sent",
         "failed": "Not sent"
+      },
+      "connection": {
+        "reconnecting": "No connection, reconnecting…"
       }
     }
   }

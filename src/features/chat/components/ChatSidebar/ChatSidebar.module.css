@@ -9,16 +9,56 @@
 }
 
 .header {
+  /* Масштаб заголовка при переподключении — как .header--withConnectionStatus в MAX */
+  --title-scale: 0.8;
+
   display: flex;
   gap: var(--space-xs);
   align-items: center;
   padding: var(--space-l) var(--space-s) var(--space-m) var(--space-l);
 }
 
-.title {
+.info {
+  display: flex;
   flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.title {
+  overflow: hidden;
   font-size: var(--font-size-header);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-header);
+  text-overflow: ellipsis;
   letter-spacing: normal;
+  white-space: nowrap;
+  transform-origin: left top;
+  transition:
+    color var(--duration-fast),
+    transform var(--duration-fast),
+    margin var(--duration-fast);
+}
+
+/* Уменьшенный заголовок и строка статуса укладываются в высоту кнопок — шапка не прыгает.
+   transform не меняет размер блока, поэтому лишняя высота убирается отрицательным отступом */
+.reconnecting .title {
+  margin-bottom: calc((var(--title-scale) - 1) * var(--line-height-header));
+  color: var(--color-text-secondary);
+  transform: scale(var(--title-scale));
+}
+
+.connectionStatus {
+  overflow: hidden;
+  font-size: var(--font-size-label);
+  line-height: var(--line-height-label);
+  text-overflow: ellipsis;
+  letter-spacing: var(--letter-spacing-tiny);
+  white-space: nowrap;
+  color: var(--color-text-tertiary);
+}
+
+/* Причина ошибки опроса и лимит тарифа — между шапкой и списком */
+.alert {
+  padding: 0 var(--space-l) var(--space-m);
 }
