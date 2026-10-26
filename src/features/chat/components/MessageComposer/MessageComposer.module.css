@@ -1,0 +1,54 @@
+/* Колонка шириной с переписку, отступы 16 по бокам и снизу — как .composer в MAX */
+.container {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: var(--size-content-max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-l) var(--space-l);
+}
+
+/* Плавающая панель: фон float-primary-flat MAX (= фон primary в обеих темах), радиус 16, тень elevation-3 */
+.composer {
+  --composer-shadow-offset: 4px;
+  --composer-shadow-blur: 16px;
+  --composer-shadow-outline-blur: 2px;
+
+  display: flex;
+  align-items: flex-end;
+  padding: var(--space-xs);
+  border-radius: var(--radius-l);
+  background: var(--color-bg-primary);
+  box-shadow:
+    0 var(--composer-shadow-offset) var(--composer-shadow-blur) var(--color-composer-shadow),
+    0 0 var(--composer-shadow-outline-blur) var(--color-composer-shadow);
+}
+
+/* Высота по содержимому (JS), не выше --composer-max-lines строк, дальше — прокрутка */
+.textarea {
+  flex: 1;
+  min-width: 0;
+  max-height: calc(var(--composer-max-lines) * var(--line-height-body) + 2 * var(--space-m-half));
+  padding: var(--space-m-half) var(--space-s);
+  border: none;
+  outline: none;
+  overflow-y: auto;
+  resize: none;
+  font: inherit;
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-primary);
+  background: transparent;
+}
+
+.textarea::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+/* Кнопка 32px по центру строки высотой 40, как .btn MAX */
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--size-button);
+  padding: var(--space-xs) var(--space-s);
+}

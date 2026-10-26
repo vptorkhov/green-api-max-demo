@@ -1,18 +1,29 @@
 import { useTranslation } from 'react-i18next';
 
 import { useChatContext } from '../../hooks/useChatContext';
+import { useSendMessage } from '../../hooks/useSendMessage';
 import { ChatHeader } from '../ChatHeader/ChatHeader';
+import { MessageComposer } from '../MessageComposer/MessageComposer';
 import { MessageList } from '../MessageList/MessageList';
 
 import styles from './ChatPanel.module.css';
 
-// Правая колонка: открытый чат (шапка, переписка, место под поле ввода) или подсказка
+// Правая колонка: открытый чат (шапка, переписка, поле ввода) или подсказка.
+// Хук отправки — здесь, а не в поле ввода: повтор (п. 6.5) вызывается из пузырей переписки
 export function ChatPanel() {
   const { chats, messages, activeChatId } = useChatContext();
+  const { isSending, sendMessage } = useSendMessage();
   const { t } = useTranslation();
 
   const activeChat = activeChatId === null ? undefined : chats[activeChatId];
   const hasActiveChat = activeChat !== undefined;
+
+  // Чат берётся в момент отправки: ответ придёт в свой чат, даже если пользователь переключится
+  function handleSend(text: string) {
+    if (activeChat !== undefined) {
+      void sendMessage(activeChat.chatId, text);
+    }
+  }
 
   return (
     <section className={styles.panel}>
@@ -20,8 +31,8 @@ export function ChatPanel() {
         <>
           <ChatHeader chat={activeChat} />
           <MessageList chatId={activeChat.chatId} messages={messages[activeChat.chatId] ?? []} />
-          {/* Место под поле ввода — этап 6 */}
-          <div className={styles.composerSlot} />
+          {/* key: при смене чата поле очищается и получает фокус (черновики не храним) */}
+          <MessageComposer key={activeChat.chatId} isSending={isSending} onSend={handleSend} />
         </>
       ) : (
         <div className={styles.empty}>

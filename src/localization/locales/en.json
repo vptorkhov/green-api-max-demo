@@ -72,6 +72,10 @@
         "phoneHint": "A Russian (+7) or Belarusian (+375) number.",
         "submit": "Find",
         "noAccount": "This number has no MAX account."
+      },
+      "composer": {
+        "placeholder": "Message",
+        "send": "Send"
       }
     }
   }

@@ -7,11 +7,6 @@
   background: linear-gradient(to bottom, var(--color-chat-bg-start), var(--color-chat-bg-end));
 }
 
-.composerSlot {
-  flex-shrink: 0;
-  min-height: var(--space-l);
-}
-
 .empty {
   display: flex;
   flex: 1;
