@@ -7,3 +7,5 @@ export { useUnauthorizedLogout } from './hooks/useUnauthorizedLogout';
 // Статус инстанса: уведомление stateInstanceChanged разбирает домен chat (п. 7.1)
 export type { InstanceState } from './types/auth.types';
 export { isInstanceState } from './utils/authGuards';
+// Причина выхода по уведомлению stateInstanceChanged — тот же текст, что при отказе во входе (п. 7.5)
+export { getInstanceStateErrorKey } from './utils/getInstanceStateErrorKey';

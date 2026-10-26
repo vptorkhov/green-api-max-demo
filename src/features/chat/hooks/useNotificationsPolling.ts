@@ -16,7 +16,8 @@ import type { NotificationEvent } from '../types/notification.types';
 import { mapNotification } from '../utils/mapNotification';
 
 type Options = {
-  // Применение события к хранилищу (п. 7.5). Вызывается до удаления уведомления из очереди
+  // Применение события к хранилищу (п. 7.5). Вызывается до удаления уведомления из очереди,
+  // кроме instanceStateChanged — после удаления
   onEvent: (event: NotificationEvent) => void;
 };
 
@@ -86,11 +87,23 @@ export function useNotificationsPolling({ onEvent }: Options) {
               console.warn(`Notification ${receiptId} ignored: ${event.reason}`);
             }
 
-            onEventRef.current(event);
+            // Выход по статусу инстанса применяется после удаления: выход отменяет запросы цикла,
+            // и неудалённое уведомление при следующем входе разлогинило бы снова (п. 7.5)
+            const isSessionEnding = event.type === 'instanceStateChanged';
+
+            if (!isSessionEnding) {
+              onEventRef.current(event);
+            }
+
             // Удаляется всегда, включая ignored и битые, — иначе очередь встанет на нём.
             // Если удаление не удалось, уведомление придёт снова: повторное применение безопасно
             // (дедупликация по id, п. 5.3)
             await chatService.deleteNotification(authorizedCredentials, receiptId, signal);
+
+            if (isSessionEnding) {
+              onEventRef.current(event);
+              return;
+            }
           }
 
           retryDelayMs = POLLING_RETRY_INITIAL_DELAY_MS;

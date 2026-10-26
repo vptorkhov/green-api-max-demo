@@ -21,6 +21,11 @@ export const RECEIVE_TIMEOUT_SECONDS = 20;
 // receiveTimeout (GreenApiNotes.md §6). Общий REQUEST_TIMEOUT_MS для long polling не подходит
 export const RECEIVE_REQUEST_TIMEOUT_MARGIN_MS = 10_000;
 
+// Окно сопоставления «осиротевшей» копии failed с уведомлением об исходящем (п. 7.5): время копии —
+// часы клиента, время уведомления — сервера, и они расходятся. Шире — выше риск убрать копию
+// другого сообщения с тем же текстом
+export const ORPHAN_MESSAGE_MATCH_WINDOW_MS = 60_000;
+
 // Повтор опроса после ошибки (сеть, сервер, лимит частоты, инстанс недоступен): пауза растёт
 // экспоненциально — 1, 2, 4 … 30 с — и сбрасывается после первого успешного запроса (п. 7.4)
 export const POLLING_RETRY_INITIAL_DELAY_MS = 1000;

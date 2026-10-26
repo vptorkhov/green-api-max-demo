@@ -1,4 +1,15 @@
-import type { Chat, ChatsAction, ChatsState, Message, StoredChats } from '../types/chat.types';
+import { ORPHAN_MESSAGE_MATCH_WINDOW_MS } from '@/constants/greenApi';
+
+import type {
+  Chat,
+  ChatsAction,
+  ChatsState,
+  Message,
+  NewChat,
+  OutgoingMessage,
+  StoredChats,
+} from '../types/chat.types';
+import { isTemporaryMessageId } from './messageId';
 
 // Сохранённое sending — запрос оборвался перезагрузкой, ответа уже не будет. Результат неизвестен,
 // поэтому failed: пользователь может повторить (решение разработчика в 6.2). Если сообщение
@@ -31,7 +42,7 @@ function insertByTimestamp(messages: Message[], message: Message) {
   return [...messages.slice(0, insertIndex), message, ...messages.slice(insertIndex)];
 }
 
-function createChat(chatId: string, updatedAt: number): Chat {
+function createEmptyChat(chatId: string, updatedAt: number): Chat {
   return { chatId, updatedAt, unreadCount: 0 };
 }
 
@@ -45,6 +56,50 @@ function withChatDetails(chat: Chat, { phone, name }: Pick<Chat, 'phone' | 'name
   };
 }
 
+// Добавляет сообщение (дубль уже отсечён). Чата может не быть — собеседник написал первым (этап 7):
+// он создаётся. Входящее в неактивный чат — непрочитанное; чат поднимается вверх списка
+function addMessageToChat(
+  state: ChatsState,
+  message: Message,
+  chatMessages: Message[],
+  details: Pick<NewChat, 'phone' | 'name'> = {},
+): ChatsState {
+  const existingChat = state.chats[message.chatId];
+  const chat = withChatDetails(existingChat ?? createEmptyChat(message.chatId, message.timestamp), {
+    phone: existingChat?.phone ?? details.phone,
+    name: existingChat?.name ?? details.name,
+  });
+  const isUnread = message.direction === 'incoming' && state.activeChatId !== message.chatId;
+
+  return {
+    ...state,
+    chats: {
+      ...state.chats,
+      [chat.chatId]: {
+        ...chat,
+        updatedAt: Math.max(chat.updatedAt, message.timestamp),
+        unreadCount: isUnread ? chat.unreadCount + 1 : chat.unreadCount,
+      },
+    },
+    messages: { ...state.messages, [chat.chatId]: insertByTimestamp(chatMessages, message) },
+  };
+}
+
+// «Осиротевшая» копия (решение разработчика в 6.2): failed с временным id — запрос оборвался
+// перезагрузкой или ошибкой, но сообщение могло уйти. Тот же текст, время в пределах окна;
+// из нескольких — самая ранняя: одно уведомление убирает одну копию, и «ок», «ок» подряд
+// не схлопываются. sending не трогаем — его закроет messageConfirmed (п. 6.2)
+function findOrphanMessage(chatMessages: Message[], sentMessage: OutgoingMessage) {
+  return chatMessages.find(
+    (item) =>
+      item.direction === 'outgoing' &&
+      item.status === 'failed' &&
+      isTemporaryMessageId(item.id) &&
+      item.text === sentMessage.text &&
+      Math.abs(item.timestamp - sentMessage.timestamp) <= ORPHAN_MESSAGE_MATCH_WINDOW_MS,
+  );
+}
+
 // Чистый reducer. Если действие ничего не меняет, возвращается то же состояние —
 // без новой ссылки потребители контекста не перерисовываются
 export function chatsReducer(state: ChatsState, action: ChatsAction): ChatsState {
@@ -54,7 +109,7 @@ export function chatsReducer(state: ChatsState, action: ChatsAction): ChatsState
     case 'chatCreated': {
       const { chat: newChat, createdAt } = action;
       const existingChat = state.chats[newChat.chatId];
-      const chat = withChatDetails(existingChat ?? createChat(newChat.chatId, createdAt), {
+      const chat = withChatDetails(existingChat ?? createEmptyChat(newChat.chatId, createdAt), {
         phone: existingChat?.phone ?? newChat.phone,
         name: existingChat?.name ?? newChat.name,
       });
@@ -85,8 +140,7 @@ export function chatsReducer(state: ChatsState, action: ChatsAction): ChatsState
       };
     }
 
-    // idMessage уникален только в пределах чата, поэтому дубль ищется среди сообщений этого чата.
-    // Чата может не быть — собеседник написал первым (этап 7): он создаётся
+    // idMessage уникален только в пределах чата, поэтому дубль ищется среди сообщений этого чата
     case 'messageAdded': {
       const { message } = action;
       const chatMessages = state.messages[message.chatId] ?? [];
@@ -95,21 +149,29 @@ export function chatsReducer(state: ChatsState, action: ChatsAction): ChatsState
         return state;
       }
 
-      const chat = state.chats[message.chatId] ?? createChat(message.chatId, message.timestamp);
-      const isUnread = message.direction === 'incoming' && state.activeChatId !== message.chatId;
+      return addMessageToChat(state, message, chatMessages);
+    }
 
-      return {
-        ...state,
-        chats: {
-          ...state.chats,
-          [chat.chatId]: {
-            ...chat,
-            updatedAt: Math.max(chat.updatedAt, message.timestamp),
-            unreadCount: isUnread ? chat.unreadCount + 1 : chat.unreadCount,
-          },
-        },
-        messages: { ...state.messages, [chat.chatId]: insertByTimestamp(chatMessages, message) },
-      };
+    // Сообщение из уведомления (п. 7.5). Уже есть с тем же id — без изменений: своё сообщение
+    // после ответа sendMessage уже sent, а failed из outgoingMessageStatus новее уведомления.
+    // Исходящее убирает свою «осиротевшую» копию failed; чата нет — создаётся с phone / name
+    case 'notificationMessageAdded': {
+      const { message, chat } = action;
+      const chatMessages = state.messages[message.chatId] ?? [];
+
+      if (chatMessages.some(({ id }) => id === message.id)) {
+        return state;
+      }
+
+      const orphanMessage =
+        message.direction === 'outgoing' ? findOrphanMessage(chatMessages, message) : undefined;
+
+      return addMessageToChat(
+        state,
+        message,
+        chatMessages.filter((item) => item !== orphanMessage),
+        chat,
+      );
     }
 
     // Статус есть только у исходящих; неизвестное сообщение или тот же статус — без изменений

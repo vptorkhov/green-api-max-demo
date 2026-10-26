@@ -1,4 +1,5 @@
 import type ru from '@/localization/locales/ru.json';
+import type { ErrorMessageKey } from '@/utils/getErrorMessageKey';
 
 // Доменные типы чата. От формы Message зависят список сообщений, хранилище (п. 5.3),
 // отправка (этап 6) и получение (этап 7)
@@ -78,12 +79,19 @@ export type ChatsAction =
   | { type: 'chatCreated'; chat: NewChat; createdAt: number }
   | { type: 'chatSelected'; chatId: string | null }
   | { type: 'messageAdded'; message: Message }
+  // Сообщение из уведомления: создаёт чат с данными собеседника, убирает копию failed (п. 7.5)
+  | { type: 'notificationMessageAdded'; message: Message; chat: NewChat }
   | { type: 'messageStatusChanged'; chatId: string; messageId: string; status: MessageStatus }
   // Ответ sendMessage: временный id → idMessage, статус sent (п. 6.2)
   | { type: 'messageConfirmed'; chatId: string; temporaryId: string; idMessage: string }
   | { type: 'chatRead'; chatId: string };
 
 export type ChatContextValue = Pick<ChatsState, 'chats' | 'messages' | 'activeChatId'> & {
+  // Опрос уведомлений (п. 7.4): соединение и ключ текста последней ошибки — для индикатора (п. 7.6)
+  isConnected: boolean;
+  connectionError: ErrorMessageKey | null;
+  // Пришло уведомление quotaExceeded: лимит тарифа (3 чата в месяц) исчерпан до конца сессии
+  isQuotaExceeded: boolean;
   // Создаёт чат или открывает существующий с тем же chatId
   createChat: (chat: NewChat) => void;
   selectChat: (chatId: string | null) => void;
