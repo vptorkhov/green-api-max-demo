@@ -4,11 +4,13 @@
   --bubble-max-width: 75%;
 
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   margin: var(--space-3xs) 0;
 }
 
 .rowOutgoing {
-  justify-content: flex-end;
+  align-items: flex-end;
 }
 
 .bubble {
@@ -38,6 +40,7 @@
 .outgoing {
   --bubble-text: var(--color-bubble-out-text);
   --bubble-time: var(--color-bubble-out-time);
+  --bubble-status: var(--color-bubble-out-status);
   --bubble-step-1: var(--color-bubble-out-1);
   --bubble-step-2: var(--color-bubble-out-2);
   --bubble-step-3: var(--color-bubble-out-3);
@@ -51,9 +54,13 @@
   overflow-wrap: anywhere;
 }
 
-/* Время обтекается текстом: на последней строке, если есть место, иначе — строкой ниже справа */
-.time {
+/* Время и статус обтекаются текстом: на последней строке, если есть место, иначе — строкой ниже справа.
+   Как .meta MAX: в строку, зазор 2px */
+.meta {
+  display: inline-flex;
   float: right;
+  gap: var(--space-2xs);
+  align-items: center;
   margin: var(--space-xs) 0 calc(-1 * var(--space-2xs)) var(--space-s);
   font-size: var(--font-size-tiny);
   line-height: var(--line-height-tiny);
@@ -61,4 +68,59 @@
   color: var(--bubble-time);
   white-space: nowrap;
   user-select: none;
+}
+
+/* Иконка статуса по высоте строки времени, цвет — bubbles-icon-read-status / -alert MAX */
+.status {
+  --icon-size: var(--line-height-tiny);
+
+  display: inline-flex;
+  color: var(--bubble-status);
+}
+
+.statusFailed {
+  --bubble-status: var(--color-bubble-alert);
+}
+
+/* Под неотправленным пузырём — «капсула», как разделитель дат: читается на фоне переписки в обеих темах */
+.failure {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs) var(--space-s);
+  align-items: baseline;
+  justify-content: flex-end;
+  max-width: var(--bubble-max-width);
+  margin-top: var(--space-xs);
+  padding: var(--space-3xs) var(--space-s-half);
+  border-radius: var(--radius-m-half);
+  font-size: var(--font-size-description);
+  line-height: var(--line-height-description);
+  color: var(--color-text-inverse);
+  background: var(--color-capsule-bg);
+}
+
+.failureText {
+  overflow-wrap: anywhere;
+}
+
+/* Причина — отдельной строкой после «Не отправлено» */
+.failureReason {
+  display: block;
+}
+
+/* Кнопка-ссылка внутри капсулы */
+.retry {
+  padding: 0;
+  border: none;
+  font: inherit;
+  font-weight: var(--font-weight-semibold);
+  text-decoration: underline;
+  color: inherit;
+  background: none;
+  cursor: pointer;
+}
+
+.retry:disabled {
+  color: var(--color-text-inverse-disabled);
+  cursor: default;
 }

@@ -76,6 +76,11 @@
       "composer": {
         "placeholder": "Message",
         "send": "Send"
+      },
+      "messageStatus": {
+        "sending": "Sending",
+        "sent": "Sent",
+        "failed": "Not sent"
       }
     }
   }

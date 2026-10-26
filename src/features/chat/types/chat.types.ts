@@ -31,6 +31,12 @@ export type OutgoingMessage = MessageBase & {
 // Размеченное объединение по direction: у входящего не может оказаться статуса отправки
 export type Message = IncomingMessage | OutgoingMessage;
 
+// Ссылка на сообщение: idMessage уникален только в пределах чата, поэтому — вместе с chatId
+export type MessageRef = {
+  chatId: string;
+  messageId: string;
+};
+
 // Последнее сообщение чата не хранится, а берётся из messages[chatId]: копия в Chat
 // пришлось бы синхронизировать при каждом добавлении, смене статуса и подмене id (этап 6)
 export type Chat = {

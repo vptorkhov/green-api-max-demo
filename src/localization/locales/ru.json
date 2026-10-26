@@ -76,6 +76,11 @@
       "composer": {
         "placeholder": "Сообщение",
         "send": "Отправить"
+      },
+      "messageStatus": {
+        "sending": "Отправляется",
+        "sent": "Отправлено",
+        "failed": "Не отправлено"
       }
     }
   }

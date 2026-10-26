@@ -5,6 +5,7 @@ import type { GreenApiCredentials } from '@/types/greenApi.types';
 import { type ErrorMessageKey, getErrorMessageKey } from '@/utils/getErrorMessageKey';
 
 import { chatService } from '../services/chatService';
+import type { MessageRef } from '../types/chat.types';
 import { createTemporaryMessageId } from '../utils/messageId';
 import { useChatContext } from './useChatContext';
 
@@ -21,6 +22,9 @@ export function useSendMessage() {
   const isSendingRef = useRef(false);
   const [isSending, setIsSending] = useState(false);
   const [error, setError] = useState<ErrorMessageKey | null>(null);
+  // К какому сообщению относится error: причину показывает только его пузырь (п. 6.5).
+  // У остальных failed (более ранних или после перезагрузки) причина уже неизвестна
+  const [failedMessage, setFailedMessage] = useState<MessageRef | null>(null);
 
   // Общая часть отправки и повтора: сообщение уже в переписке со статусом sending
   async function deliverMessage(
@@ -32,6 +36,7 @@ export function useSendMessage() {
     isSendingRef.current = true;
     setIsSending(true);
     setError(null);
+    setFailedMessage(null);
 
     try {
       const idMessage = await chatService.sendMessage(authorizedCredentials, {
@@ -52,6 +57,7 @@ export function useSendMessage() {
 
       console.error(caughtError);
       setError(getErrorMessageKey(caughtError));
+      setFailedMessage({ chatId, messageId });
     } finally {
       isSendingRef.current = false;
       setIsSending(false);
@@ -100,6 +106,7 @@ export function useSendMessage() {
   return {
     isSending,
     error,
+    failedMessage,
     sendMessage,
     retryMessage,
   };
