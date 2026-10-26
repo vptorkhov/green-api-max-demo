@@ -48,6 +48,14 @@
     color var(--duration-fast);
 }
 
+/* На touch-устройствах сегмент не ниже 44px (п. 8.6): соседние сегменты вплотную,
+   поэтому зона касания растёт вместе с самим сегментом */
+@media (pointer: coarse) {
+  .text {
+    padding-block: calc((var(--size-touch-target) - var(--line-height-caption)) / 2);
+  }
+}
+
 .input:checked + .text {
   color: var(--color-text-primary);
   background: var(--color-bg-primary);

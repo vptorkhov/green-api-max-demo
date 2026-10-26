@@ -8,10 +8,23 @@
   background: var(--color-bg-primary);
 }
 
+/* Узкий экран: колонка во всю ширину, разделитель не нужен; при открытом чате видна переписка */
+@media (max-width: 925.9px) {
+  .sidebar {
+    border-right: none;
+  }
+
+  .withActiveChat {
+    display: none;
+  }
+}
+
 .header {
   /* Масштаб заголовка при переподключении — как .header--withConnectionStatus в MAX */
   --title-scale: 0.8;
 
+  /* Точка отсчёта панели настроек на узком экране (SettingsMenu) */
+  position: relative;
   display: flex;
   gap: var(--space-xs);
   align-items: center;

@@ -9,7 +9,10 @@
   align-items: center;
   justify-content: center;
   min-height: 100%;
-  padding: var(--space-l);
+  /* Не меньше 16px и не под вырезами устройства (п. 8.6) */
+  padding: max(var(--space-l), env(safe-area-inset-top))
+    max(var(--space-l), env(safe-area-inset-right)) max(var(--space-l), env(safe-area-inset-bottom))
+    max(var(--space-l), env(safe-area-inset-left));
   background: linear-gradient(to bottom, var(--color-chat-bg-start), var(--color-chat-bg-end));
 }
 

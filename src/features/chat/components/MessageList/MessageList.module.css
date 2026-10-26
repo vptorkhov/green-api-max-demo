@@ -18,6 +18,7 @@
   position: absolute;
   right: var(--space-l);
   bottom: var(--space-l);
+  display: flex;
 }
 
 /* Колонка переписки по центру, как в MAX; сообщения прижаты к низу */

@@ -27,7 +27,7 @@
 
 .form {
   overflow-y: auto;
-  padding: var(--space-s) var(--space-l) var(--space-l);
+  padding: var(--space-s) var(--space-l) calc(var(--space-l) + env(safe-area-inset-bottom));
 }
 
 /* fieldset нужен только для блокировки полей — браузерное оформление убрано */

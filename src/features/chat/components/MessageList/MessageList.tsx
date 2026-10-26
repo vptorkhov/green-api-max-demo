@@ -77,14 +77,16 @@ export function MessageList({
           {isEmpty && <p className={styles.empty}>{t('pages.chat.noMessages')}</p>}
         </div>
       </div>
+      {/* Обёртка задаёт положение: у самой кнопки position занят зоной касания (IconButton) */}
       {!isAtBottom && (
-        <IconButton
-          className={styles.scrollButton}
-          label={t('pages.chat.scrollToBottom')}
-          icon={<ArrowDownIcon />}
-          variant="floating"
-          onClick={scrollToBottom}
-        />
+        <div className={styles.scrollButton}>
+          <IconButton
+            label={t('pages.chat.scrollToBottom')}
+            icon={<ArrowDownIcon />}
+            variant="floating"
+            onClick={scrollToBottom}
+          />
+        </div>
       )}
     </div>
   );

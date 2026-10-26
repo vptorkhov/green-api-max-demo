@@ -1,6 +1,8 @@
 import { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { joinClassNames } from '@/utils/joinClassNames';
+
 import { useChatContext } from '../../hooks/useChatContext';
 import { useChatHistory } from '../../hooks/useChatHistory';
 import { useSendMessage } from '../../hooks/useSendMessage';
@@ -12,9 +14,10 @@ import styles from './ChatPanel.module.css';
 
 // Правая колонка: открытый чат (шапка, переписка, поле ввода) или подсказка. История открытого
 // чата догружается с сервера (п. 7.10).
-// Хук отправки — здесь, а не в поле ввода: повтор (п. 6.5) вызывается из пузырей переписки
+// Хук отправки — здесь, а не в поле ввода: повтор (п. 6.5) вызывается из пузырей переписки.
+// На узком экране колонка видна, только пока открыт чат (п. 8.6)
 export function ChatPanel() {
-  const { chats, messages, activeChatId } = useChatContext();
+  const { chats, messages, activeChatId, selectChat } = useChatContext();
   const { isSending, error, failedMessage, sendMessage, retryMessage } = useSendMessage();
   const {
     isLoading: isHistoryLoading,
@@ -38,6 +41,11 @@ export function ChatPanel() {
     }
   }
 
+  // «Назад» на узком экране: закрыть чат — вернётся список (п. 8.6)
+  function handleBack() {
+    selectChat(null);
+  }
+
   function handleRetry(messageId: string) {
     if (activeChat !== undefined) {
       void retryMessage(activeChat.chatId, messageId);
@@ -45,13 +53,13 @@ export function ChatPanel() {
   }
 
   return (
-    <section className={styles.panel}>
+    <section className={joinClassNames(styles.panel, !hasActiveChat && styles.withoutActiveChat)}>
       {hasActiveChat ? (
         // key: для каждого чата шапка, переписка и поле ввода монтируются заново — прокрутка
         // начинается с конца (п. 8.2), поле очищается и получает фокус (черновики не храним).
         // Один key на всю группу: у соседних элементов ключи не должны повторяться
         <Fragment key={activeChat.chatId}>
-          <ChatHeader chat={activeChat} />
+          <ChatHeader chat={activeChat} onBack={handleBack} />
           <MessageList
             messages={messages[activeChat.chatId] ?? []}
             sendErrorKey={error}

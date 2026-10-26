@@ -1,6 +1,15 @@
-/* Две колонки на всю высоту окна; на узком экране (этап 8) — либо список, либо переписка */
+/* Две колонки на всю высоту окна; на узком экране — одна: либо список, либо переписка (п. 8.6).
+   Какая из них видна, решают сами колонки — им известен открытый чат.
+   Отступы под вырезы сверху и по бокам — здесь, снизу — у списка и поля ввода: фон под ними свой */
 .screen {
   display: grid;
   grid-template-columns: var(--size-sidebar-width) minmax(0, 1fr);
   height: 100%;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) 0 env(safe-area-inset-left);
+}
+
+@media (max-width: 925.9px) {
+  .screen {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }

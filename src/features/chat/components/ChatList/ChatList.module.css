@@ -1,6 +1,8 @@
+/* Отступ снизу — под домашний индикатор устройств без кнопки «Домой» (п. 8.6) */
 .list {
   flex: 1;
   overflow-y: auto;
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .empty {

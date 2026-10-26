@@ -1,5 +1,6 @@
 /* Круглая кнопка с иконкой — по правилам .button web.max.ru (refs/tokens.md, «Кнопки») */
 .button {
+  position: relative;
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;
@@ -60,14 +61,27 @@
 
 .small {
   --icon-size: var(--size-icon-small);
-
-  width: var(--size-button-small);
-  height: var(--size-button-small);
+  --button-size: var(--size-button-small);
 }
 
 .medium {
   --icon-size: var(--size-icon);
+  --button-size: var(--size-button);
+}
 
-  width: var(--size-button);
-  height: var(--size-button);
+.small,
+.medium {
+  width: var(--button-size);
+  height: var(--button-size);
+}
+
+/* На touch-устройствах зона касания не меньше 44px (п. 8.6): кнопка выглядит как в MAX,
+   а нажатие ловит невидимый псевдоэлемент, выступающий за её края */
+@media (pointer: coarse) {
+  .button::after {
+    content: '';
+    position: absolute;
+    inset: min(0px, (var(--button-size) - var(--size-touch-target)) / 2);
+    border-radius: inherit;
+  }
 }

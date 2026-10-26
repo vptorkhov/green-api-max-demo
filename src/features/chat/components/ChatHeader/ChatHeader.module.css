@@ -10,6 +10,20 @@
   background: var(--color-bg-primary);
 }
 
+/* Узкий экран: слева «Назад», отступ слева — как у шапки «Найти по номеру» (NewChatPanel) */
+@media (max-width: 925.9px) {
+  .header {
+    padding-left: var(--space-s);
+  }
+}
+
+/* .header .back — сильнее display из IconButton */
+@media (min-width: 926px) {
+  .header .back {
+    display: none;
+  }
+}
+
 .info {
   min-width: 0;
 }

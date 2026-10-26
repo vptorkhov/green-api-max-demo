@@ -24,3 +24,16 @@
   background: var(--color-bg-primary);
   box-shadow: var(--shadow-dropdown);
 }
+
+/* Узкий экран (п. 8.6): от кнопки панель ушла бы за левый край окна — прижимается к правому краю
+   шапки. Точка отсчёта — ближайший позиционированный предок (.header в ChatSidebar) */
+@media (max-width: 925.9px) {
+  .menu {
+    position: static;
+  }
+
+  .panel {
+    top: 100%;
+    right: var(--space-s);
+  }
+}

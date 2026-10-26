@@ -20,16 +20,18 @@ import styles from './ChatSidebar.module.css';
 // поверх списка — меню MAX (группа, канал, звонок…) не нужно, сценарий у нас один (п. 5.5).
 // Индикатор соединения (п. 7.6): при ошибке опроса заголовок уменьшается и под ним строка
 // «Нет соединения…», как в MAX; причина — блоком под шапкой. В нормальном состоянии ничего нет.
-// Там же предупреждение о выключенных уведомлениях в настройках инстанса (п. 7.7)
+// Там же предупреждение о выключенных уведомлениях в настройках инстанса (п. 7.7).
+// На узком экране колонка скрыта, пока открыт чат (п. 8.6)
 export function ChatSidebar() {
   const { logout } = useAuthContext();
-  const { connectionError, isQuotaExceeded } = useChatContext();
+  const { activeChatId, connectionError, isQuotaExceeded } = useChatContext();
   const { disabledSettings } = useNotificationSettingsCheck();
   const { t } = useTranslation();
 
   const [isNewChatOpen, setIsNewChatOpen] = useState(false);
   // Ошибка опроса сбрасывается первым успешным запросом — пока она есть, идёт переподключение
   const isReconnecting = connectionError !== null;
+  const hasActiveChat = activeChatId !== null;
 
   function handleLogoutClick() {
     logout();
@@ -44,7 +46,7 @@ export function ChatSidebar() {
   }
 
   return (
-    <aside className={styles.sidebar}>
+    <aside className={joinClassNames(styles.sidebar, hasActiveChat && styles.withActiveChat)}>
       {isNewChatOpen ? (
         <NewChatPanel onClose={handleNewChatClose} />
       ) : (

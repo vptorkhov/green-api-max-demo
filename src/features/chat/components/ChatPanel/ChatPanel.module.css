@@ -7,6 +7,13 @@
   background: linear-gradient(to bottom, var(--color-chat-bg-start), var(--color-chat-bg-end));
 }
 
+/* Узкий экран без открытого чата: подсказка «Выберите чат» не нужна — виден список */
+@media (max-width: 925.9px) {
+  .withoutActiveChat {
+    display: none;
+  }
+}
+
 .empty {
   display: flex;
   flex: 1;
