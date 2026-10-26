@@ -1,0 +1,38 @@
+/* Карточка на фоне области переписки — как экран входа (LoginScreen) */
+.screen {
+  /* Ширина карточки нужна только здесь, поэтому — переменная модуля, а не токен */
+  --error-card-max-width: 400px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  padding: var(--space-l);
+  background: linear-gradient(to bottom, var(--color-chat-bg-start), var(--color-chat-bg-end));
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+  width: 100%;
+  max-width: var(--error-card-max-width);
+  padding: var(--space-2xl) var(--space-xl);
+  border: var(--size-border) solid var(--color-divider);
+  border-radius: var(--radius-xl);
+  background: var(--color-bg-primary);
+  box-shadow: 0 var(--space-xs) var(--space-xl) var(--color-composer-shadow);
+}
+
+.title {
+  font-size: var(--font-size-header);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-header);
+  letter-spacing: normal;
+}
+
+.text {
+  font-size: var(--font-size-detail);
+  line-height: var(--line-height-detail);
+  color: var(--color-text-secondary);
+}

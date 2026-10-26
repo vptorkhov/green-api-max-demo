@@ -19,6 +19,11 @@
       "server": "GREEN-API server error. Try again later.",
       "invalidResponse": "The server returned an unexpected response.",
       "unknown": "Something went wrong. Try again."
+    },
+    "errorBoundary": {
+      "title": "Something went wrong",
+      "text": "The app ran into an unexpected error. Reload the page — your chats are saved in the browser.",
+      "reload": "Reload"
     }
   },
   "pages": {
