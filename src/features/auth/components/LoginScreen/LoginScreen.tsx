@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
 import { LanguageSelect } from '@/components/LanguageSelect/LanguageSelect';
+import { ThemeSelect } from '@/components/ThemeSelect/ThemeSelect';
 import { GREEN_API_CONSOLE_URL } from '@/constants/greenApi';
 
 import { useAuthContext } from '../../hooks/useAuthContext';
@@ -46,8 +47,11 @@ export function LoginScreen() {
           </a>
         </p>
       </section>
-      {/* Язык — до входа: экран входа тоже должен быть понятен (п. 8.4) */}
-      <LanguageSelect className={styles.preferences} />
+      {/* Язык и тема — до входа: экран входа тоже должен быть понятен и удобен (п. 8.4–8.5) */}
+      <div className={styles.preferences}>
+        <LanguageSelect />
+        <ThemeSelect />
+      </div>
     </main>
   );
 }

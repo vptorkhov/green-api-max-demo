@@ -2,6 +2,9 @@
  * Токены дизайна. Значения взяты с web.max.ru, цветовая тема «space»
  * (green-api-max-docs/refs/tokens.md). Имена — собственные.
  *
+ * Отступление от MAX: несколько цветов текста и фон капсул доведены до контраста WCAG AA
+ * (решение разработчика в 8.5) — исходные значения MAX указаны в комментариях рядом.
+ *
  * Светлая тема — тема по умолчанию и задана в :root, поэтому страница оформлена,
  * даже если data-theme не выставлен. Тёмная тема переопределяет только цвета.
  */
@@ -98,11 +101,12 @@
   /* Цвета: текст */
   --color-text-primary: #060708;
   --color-text-secondary: #060708ad;
-  --color-text-tertiary: #06070885;
+  /* MAX: #06070885 / #007aff / #ff303c — 3,6–4,1:1 на белом; потемнее до 4,5:1 (WCAG AA, п. 8.5) */
+  --color-text-tertiary: #06070890;
   --color-text-inverse: #fff;
   --color-text-inverse-disabled: #ffffffb8;
-  --color-text-themed: #007aff;
-  --color-text-negative: #ff303c;
+  --color-text-themed: #006be1;
+  --color-text-negative: #e32b36;
 
   /* Цвета: иконки */
   --color-icon-primary: #060708d6;
@@ -131,7 +135,8 @@
   /* Цвета: область переписки */
   --color-chat-bg-start: #99d5d7;
   --color-chat-bg-end: #80bcff;
-  --color-capsule-bg: #0f8ec285;
+  /* MAX: #0f8ec285 — белый текст 2,5:1 на светлом конце фона; плотнее и темнее до 4,5:1 (п. 8.5) */
+  --color-capsule-bg: #0b658ac3;
   --color-composer-shadow: #20366e24;
 
   /* Цвета: пузыри сообщений (шаги градиента 1 → 3) */
@@ -167,8 +172,9 @@
   --color-text-tertiary: #ffffffa3;
   --color-text-inverse: #fff;
   --color-text-inverse-disabled: #ffffff3d;
-  --color-text-themed: #007aff;
-  --color-text-negative: #ce4257;
+  /* MAX: #007aff / #ce4257 — 3,4:1 и 3,8:1; посветлее до 4,5:1 (WCAG AA, п. 8.5) */
+  --color-text-themed: #3395ff;
+  --color-text-negative: #d35769;
 
   --color-icon-primary: #fff;
   --color-icon-secondary: #ffffffad;
@@ -205,7 +211,8 @@
   --color-bubble-out-2: #735acd;
   --color-bubble-out-3: #5d6ae5;
   --color-bubble-out-text: #fff;
-  --color-bubble-out-time: #ffffffa3;
+  /* MAX: #ffffffa3 — 2,8:1 на светлом конце градиента; поднято до 3:1 (п. 8.5) */
+  --color-bubble-out-time: #ffffffb0;
   --color-bubble-out-status: #ffffffe0;
 
   --color-bubble-alert: #e64646;

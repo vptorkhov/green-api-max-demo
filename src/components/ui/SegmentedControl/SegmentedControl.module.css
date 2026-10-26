@@ -36,7 +36,7 @@
 
 .text {
   flex: 1;
-  padding: var(--space-xs) var(--space-m);
+  padding: var(--space-xs) var(--space-s);
   border-radius: var(--radius-s-half);
   font-size: var(--font-size-caption);
   line-height: var(--line-height-caption);

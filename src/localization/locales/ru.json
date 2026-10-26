@@ -33,6 +33,14 @@
         "ru": "Русский",
         "en": "English"
       }
+    },
+    "themeSelect": {
+      "label": "Тема",
+      "modes": {
+        "system": "Системная",
+        "light": "Светлая",
+        "dark": "Тёмная"
+      }
     }
   },
   "pages": {

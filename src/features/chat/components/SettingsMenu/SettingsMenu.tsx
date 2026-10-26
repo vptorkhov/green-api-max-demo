@@ -2,6 +2,7 @@ import { useCallback, useId, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { LanguageSelect } from '@/components/LanguageSelect/LanguageSelect';
+import { ThemeSelect } from '@/components/ThemeSelect/ThemeSelect';
 import { IconButton } from '@/components/ui/IconButton/IconButton';
 import { SettingsIcon } from '@/components/ui/icons/SettingsIcon';
 import { type DismissReason, useDismiss } from '@/hooks/useDismiss';
@@ -9,7 +10,7 @@ import { type DismissReason, useDismiss } from '@/hooks/useDismiss';
 import styles from './SettingsMenu.module.css';
 
 // «Настройки» в шапке боковой панели (решение разработчика в 8.4): в MAX язык и тема — в настройках,
-// но панели-рейки у нас нет. Выпадающая панель в стиле меню MAX; тема добавится в 8.5
+// но панели-рейки у нас нет. Выпадающая панель в стиле меню MAX: язык и тема (п. 8.4–8.5)
 export function SettingsMenu() {
   const { t } = useTranslation();
 
@@ -51,6 +52,7 @@ export function SettingsMenu() {
           aria-label={t('pages.chat.settings.title')}
         >
           <LanguageSelect isLabelVisible />
+          <ThemeSelect isLabelVisible />
         </div>
       )}
     </div>
