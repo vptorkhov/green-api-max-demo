@@ -47,6 +47,10 @@ export function ChatProvider({ children }: Props) {
     [],
   );
 
+  const confirmMessage = useCallback((chatId: string, temporaryId: string, idMessage: string) => {
+    dispatch({ type: 'messageConfirmed', chatId, temporaryId, idMessage });
+  }, []);
+
   const markChatRead = useCallback((chatId: string) => {
     dispatch({ type: 'chatRead', chatId });
   }, []);
@@ -65,6 +69,7 @@ export function ChatProvider({ children }: Props) {
       selectChat,
       addMessage,
       changeMessageStatus,
+      confirmMessage,
       markChatRead,
     }),
     [
@@ -75,6 +80,7 @@ export function ChatProvider({ children }: Props) {
       selectChat,
       addMessage,
       changeMessageStatus,
+      confirmMessage,
       markChatRead,
     ],
   );

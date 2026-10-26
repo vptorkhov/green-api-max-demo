@@ -11,7 +11,7 @@ export type MessageStatus = 'sending' | 'sent' | 'failed';
 
 type MessageBase = {
   // idMessage GREEN-API. Уникален только в пределах чата (GreenApiNotes.md §3), поэтому сообщения
-  // хранятся по chatId. До ответа SendMessage — временный crypto.randomUUID() (п. 6.2)
+  // хранятся по chatId. До ответа SendMessage — временный id (createTemporaryMessageId, п. 6.2)
   id: string;
   chatId: string;
   text: string;
@@ -73,6 +73,8 @@ export type ChatsAction =
   | { type: 'chatSelected'; chatId: string | null }
   | { type: 'messageAdded'; message: Message }
   | { type: 'messageStatusChanged'; chatId: string; messageId: string; status: MessageStatus }
+  // Ответ sendMessage: временный id → idMessage, статус sent (п. 6.2)
+  | { type: 'messageConfirmed'; chatId: string; temporaryId: string; idMessage: string }
   | { type: 'chatRead'; chatId: string };
 
 export type ChatContextValue = Pick<ChatsState, 'chats' | 'messages' | 'activeChatId'> & {
@@ -80,6 +82,8 @@ export type ChatContextValue = Pick<ChatsState, 'chats' | 'messages' | 'activeCh
   createChat: (chat: NewChat) => void;
   selectChat: (chatId: string | null) => void;
   addMessage: (message: Message) => void;
+  // failed — ошибка отправки; sending — повтор (п. 6.3)
   changeMessageStatus: (chatId: string, messageId: string, status: MessageStatus) => void;
+  confirmMessage: (chatId: string, temporaryId: string, idMessage: string) => void;
   markChatRead: (chatId: string) => void;
 };

@@ -1,9 +1,25 @@
 import type { Chat, ChatsAction, ChatsState, Message, StoredChats } from '../types/chat.types';
 
+// Сохранённое sending — запрос оборвался перезагрузкой, ответа уже не будет. Результат неизвестен,
+// поэтому failed: пользователь может повторить (решение разработчика в 6.2). Если сообщение
+// на самом деле ушло, копию уберёт уведомление об исходящем (п. 7.5)
+function failInterruptedMessage(message: Message): Message {
+  return message.direction === 'outgoing' && message.status === 'sending'
+    ? { ...message, status: 'failed' }
+    : message;
+}
+
 export function createChatsState(stored: StoredChats | null): ChatsState {
+  const messages = Object.fromEntries(
+    Object.entries(stored?.messages ?? {}).map(([chatId, chatMessages]) => [
+      chatId,
+      chatMessages.map(failInterruptedMessage),
+    ]),
+  );
+
   return {
     chats: stored?.chats ?? {},
-    messages: stored?.messages ?? {},
+    messages,
     activeChatId: null,
   };
 }
@@ -113,6 +129,28 @@ export function chatsReducer(state: ChatsState, action: ChatsAction): ChatsState
           [chatId]: chatMessages.map((item) => (item === message ? { ...message, status } : item)),
         },
       };
+    }
+
+    // Временный id → idMessage, статус sent. Замена id обязательна: уведомление об этом же сообщении
+    // (этап 7) придёт с idMessage, и дедупликация не даст ему задвоиться.
+    // Гонка: уведомление пришло раньше ответа и сообщение с idMessage уже есть — временное удаляется
+    case 'messageConfirmed': {
+      const { chatId, temporaryId, idMessage } = action;
+      const chatMessages = state.messages[chatId] ?? [];
+      const message = chatMessages.find(({ id }) => id === temporaryId);
+
+      if (message?.direction !== 'outgoing') {
+        return state;
+      }
+
+      const isAlreadyAdded = chatMessages.some(({ id }) => id === idMessage);
+      const confirmedMessages = isAlreadyAdded
+        ? chatMessages.filter((item) => item !== message)
+        : chatMessages.map((item) =>
+            item === message ? { ...message, id: idMessage, status: 'sent' as const } : item,
+          );
+
+      return { ...state, messages: { ...state.messages, [chatId]: confirmedMessages } };
     }
 
     case 'chatRead': {
